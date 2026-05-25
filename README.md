@@ -10,4 +10,6 @@ PM-facing agent for weekly field experiment logistics. The PM provides natural-l
 - `data/` — master team/vehicle/location/lodging data.
 - `examples/weekly_plan_example.json` — sample renderer payload.
 
+See `docs/ARCHITECTURE.md` for the migration summary, architecture decisions, Drive publishing boundary, and current roadmap.
+
 The PM should not interact with JSON. JSON exists only between the agent and renderer.
