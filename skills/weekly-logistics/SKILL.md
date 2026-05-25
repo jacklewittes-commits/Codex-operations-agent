@@ -21,9 +21,10 @@ The primary product is a formatted Google Sheet in the designated Drive folder. 
 2. Ask only for blocking missing information. Convert non-blocking gaps into assumptions or review flags.
 3. Build the internal `weekly_plan` payload.
 4. Validate hard constraints: vehicle capacity, trailer license, rental driver permission, trucks, room capacity, gender-separated lodging, required roles.
-5. Render the Google Sheet using the Apps Script renderer.
-6. Return the Sheet URL, assumptions, unresolved flags, and a concise PM review checklist.
-7. For PM revisions, update the internal plan, revalidate, and regenerate/update the Sheet.
+5. Prepare a draft renderer payload and ask for/receive PM approval before publishing to Drive.
+6. After PM approval, render the Google Sheet using the Apps Script renderer into the designated Drive folder only.
+7. Return the Sheet URL, assumptions, unresolved flags, and a concise PM review checklist.
+8. For PM revisions, update the internal plan, revalidate, and regenerate/update the Sheet only with PM approval.
 
 ## Data handling
 - Always respond to the PM in English.
@@ -32,7 +33,7 @@ The primary product is a formatted Google Sheet in the designated Drive folder. 
 - If a repository data file is missing or malformed, report the exact file and continue only with explicit PM confirmation.
 
 ## Google Sheets renderer
-The current renderer is stored under `integrations/google_sheets/`. It creates the operational tabs: `Week Setup`, `Vehicle Plan`, `איושים`, `שיבוצי לינה`, and `צוות`.
+The current renderer is stored under `integrations/google_sheets/`. It creates the operational tabs: `Week Setup`, `Vehicle Plan`, `איושים`, `שיבוצי לינה`, and `צוות`. The renderer payload `title` must follow `aa-bb.mm_plan` and the Apps Script must publish only to folder ID `1bXGmaGlUHH25K6O4_WzUAmA8gWR9HjzV` after PM approval.
 
 To create a sheet from a prepared payload:
 
