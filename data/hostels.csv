@@ -1,0 +1,42 @@
+hostel_name,unit_name,room_name,capacity,location,notes
+בית קטן בערבה,בקתה 2,חדר 1,,עין יהב,verify capacity unless populated
+בית קטן בערבה,בקתה 2,חדר 2,,עין יהב,verify capacity unless populated
+בית קטן בערבה,בקתה 3,חדר 1,,עין יהב,verify capacity unless populated
+בית קטן בערבה,בקתה 4,חדר 1,,עין יהב,verify capacity unless populated
+בקתה בערבה - נוני,בקתה 5,חדר 1,,עין יהב,verify capacity unless populated
+בקתה בערבה - נוני,בקתה 5,חדר 2,,עין יהב,verify capacity unless populated
+בקתה בערבה - נוני,בקתה 2,חדר 1,,עין יהב,verify capacity unless populated
+בקתה בערבה - נוני,בקתה 3,חדר 1,,עין יהב,verify capacity unless populated
+בקתה בערבה - נוני,בקתה 4,חדר 1,,עין יהב,verify capacity unless populated
+בקתה בערבה - נוני,בקתה 4,חדר 2,,עין יהב,verify capacity unless populated
+איריס - אתנחתא במדבר,בקתה 2,חדר 1,,עין יהב,verify capacity unless populated
+איריס - אתנחתא במדבר,בקתה 3,חדר 2,,עין יהב,verify capacity unless populated
+רגע בערבה,דירה,חדר 1,4,עין יהב,capacity from renderer sample; verify
+רגע בערבה,דירה,חדר 2,4,עין יהב,capacity from renderer sample; verify
+רגע בערבה,דירה,חדר 3,4,עין יהב,capacity from renderer sample; verify
+רגע בערבה,דירה,חדר 4,4,עין יהב,capacity from renderer sample; verify
+רגע בערבה,זוהר,חדר 1,3,עין יהב,capacity from renderer sample; verify
+רגע בערבה,זוהר,חדר 2,3,עין יהב,capacity from renderer sample; verify
+רגע בערבה,זוהר,חדר 3,3,עין יהב,capacity from renderer sample; verify
+רגע בערבה,בקתה 7,חדר 1,3,עין יהב,capacity from renderer sample; verify
+רגע בערבה,בקתה 7,חדר 2,3,עין יהב,capacity from renderer sample; verify
+רגע בערבה,בקתה 8,חדר 1,2,עין יהב,capacity from renderer sample; verify
+רגע בערבה,בקתה 8,חדר 2,2,עין יהב,capacity from renderer sample; verify
+רגע בערבה,שיזף,חדר 1,3,עין יהב,capacity from renderer sample; verify
+רגע בערבה,שיזף,חדר 2,3,עין יהב,capacity from renderer sample; verify
+רגע בערבה,נקרות,חדר 1,,עין יהב,verify capacity unless populated
+רגע בערבה,נקרות,חדר 2,,עין יהב,verify capacity unless populated
+רגע בערבה,אשבורן,חדר 1,,עין יהב,verify capacity unless populated
+רגע בערבה,אשבורן,חדר 2,,עין יהב,verify capacity unless populated
+רגע בערבה,בקתה 2,חדר 1,,עין יהב,verify capacity unless populated
+רגע בערבה,בקתה 2,חדר 2,,עין יהב,verify capacity unless populated
+רגע בערבה,בקתה 3,חדר 1,,עין יהב,verify capacity unless populated
+רגע בערבה,בקתה 4,חדר 1,,עין יהב,verify capacity unless populated
+רגע בערבה,בקתה 5,חדר 1,,עין יהב,verify capacity unless populated
+רגע בערבה,בקתה 5,חדר 2,,עין יהב,verify capacity unless populated
+רגע בערבה,בקתה 4,חדר 2,,עין יהב,verify capacity unless populated
+רגע בערבה,בקתה 3,חדר 2,,עין יהב,verify capacity unless populated
+רגע בערבה,מואה,חדר 1,,עין יהב,verify capacity unless populated
+רגע בערבה,מואה,חדר 2,,עין יהב,verify capacity unless populated
+רגע בערבה,אשוש,חדר 1,,עין יהב,verify capacity unless populated
+רגע בערבה,אשוש,חדר 2,,עין יהב,verify capacity unless populated

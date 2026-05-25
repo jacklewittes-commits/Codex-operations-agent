@@ -1,0 +1,14 @@
+﻿vehicle_id,display_name,vehicle_type,ownership,home_base,license_plate,active_by_default,capacity_estimate,trailer_capable,default_trailer,observed_names,notes
+ducato,דוקאטו,van,company,,49239604,כן,,לא,לא,דוקאטו; דוקאטו מספר רכב - 49239604,Permanent company van observed in weekly plans.
+pickup_1,טנדר #1 + מתדלקת סולר,pickup_truck,company,,26425804,כן,,כן,context-dependent,טנדר #1 + מתדלקת סולר; טנדר #1 + מתדלקת סולר + נגרר ערבי; טנדר #1 + מתדלקת סולר מספר רכב - 26425804,טנדר means pickup truck. One of two company pickups. May be paired with trailer/נגרר depending on week.
+pickup_2,"טנדר #2 + מתדלקת דס""ל - גדול",pickup_truck,company,,26425904,כן,,כן,context-dependent,"טנדר #2 + מתדקלת דס""ל - גדול; טנדר #2 + מתדלקת דס""ל מספר רכב - 26425904",Second company pickup. May be paired with trailer/נגרר depending on week.
+trailer_1,נגרר #1,trailer,company,,,context-dependent,,,,טנדר #1 + מתדלקת סולר + נגרר ערבי,One of two trailers. נגרר means trailer. Requires trailer-licensed driver when attached.
+trailer_2,נגרר #2,trailer,company,,,context-dependent,,,,,Second trailer. Requires trailer-licensed driver when attached.
+hyundai_i20_1,יונדאי I20 1,company_car,company,,88386302,context-dependent,,לא,לא,יונדאי I20 1; יונדאי 1; יונדאי 1 יקנעם,Company car.
+hyundai_i20_2,יונדאי I20 2,company_car,company,,88385302,context-dependent,,לא,לא,יונדאי I20 2; יונדאי I20; יונדאי 2; יונדאי 2 חדשה; יונדאי 2 מספר רכב - 88385302,Company car.
+rav4,טויטה RAV4,company_car,company,,,context-dependent,,לא,לא,טויטה; טויטה מספר רכב -,Company car; often appears in sheets as טויטה.
+truck_1,משאית - 1,truck,hired_or_company,,,context-dependent,driver + escort only,לא,לא,משאית - 1,Truck usage is planned weekly. Do not use as passenger transport unless explicitly confirmed.
+truck_2,משאית - 2,truck,hired_or_company,,,context-dependent,driver + escort only,לא,לא,משאית - 2,Truck usage is planned weekly. Do not use as passenger transport unless explicitly confirmed.
+rental_car_template,מושכר,rental_car,rental,varies weekly,,לא,,לא,לא,מושכר - מאזדה; מושכר - מזאדה; מושכר שברולט; מושכר 1 סובארו שחור - תל אביב; מושכר 2 סובארו שחור - תל אביב; מושכר 3 סובארו לבן יקנעם,"Rental vehicles are added per week from PM context. Examples observed: Subaru, Chevrolet, Mazda."
+rental_pickup_template,טנדר מושכר,rental_pickup_truck,rental,varies weekly,,לא,,context-dependent,לא,טנדר מושכר 3 פולקסוואגן - תל אביב; טנדר מושכר 4 פורד - תל אביב,Rental pickups are added per week from PM context. Examples observed: Volkswagen/Ford pickups.
+jumpy_rental_template,גאמפי / Jumpy,rental_van,rental,varies weekly,,לא,,לא,לא,גאמפי מספר רכב -,Observed as גאמפי; treat as weekly rental unless PM says otherwise.

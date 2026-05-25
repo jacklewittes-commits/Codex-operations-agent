@@ -1,0 +1,126 @@
+{
+  "title": "Sample_Weekly_Plan",
+  "weekLabel": "Sample Site | Sunday-Tuesday | 01.06.26",
+  "startDate": "01/06/26",
+  "endDate": "03/06/26",
+  "site": "עין יהב",
+  "experimentManager": "ספי",
+  "safetyOfficer": "נטע אופיר הולטקוויסט",
+  "overnight": "Yes",
+  "hostel": "רגע בערבה",
+  "bookedUnits": "דירה, זוהר",
+  "trucksRequired": "1",
+  "days": [
+    "יום ראשון",
+    "יום שני",
+    "יום שלישי"
+  ],
+  "vehicles": [
+    {
+      "name": "דוקאטו\nמספר רכב -",
+      "trailerRequired": false,
+      "days": [
+        {
+          "outRoute": "תל אביב -> עין יהב",
+          "outTime": "ערב",
+          "outCmd": "שי ליסקובסקי",
+          "outP1": "אליאור"
+        },
+        {},
+        {
+          "retRoute": "עין יהב -> תל אביב",
+          "retCmd": "שי ליסקובסקי",
+          "retP1": "אליאור"
+        }
+      ]
+    }
+  ],
+  "staffing": [
+    {
+      "name": "עין יהב",
+      "days": [
+        "ראשון",
+        "שני",
+        "שלישי"
+      ],
+      "prefill": [
+        {
+          "role": "ניסוי מנהל",
+          "days": [
+            "ספי",
+            "ספי",
+            "ספי"
+          ]
+        },
+        {
+          "role": "בטיחות",
+          "days": [
+            "נטע אופיר הולטקוויסט",
+            "נטע אופיר הולטקוויסט",
+            "נטע אופיר הולטקוויסט"
+          ]
+        }
+      ],
+      "totals": [
+        2,
+        2,
+        2
+      ]
+    }
+  ],
+  "accommodation": {
+    "hostel": "רגע בערבה",
+    "nights": [
+      "לילה א (ראשון-שני)",
+      "לילה ב (שני-שלישי)"
+    ],
+    "nightTotals": [
+      2,
+      2
+    ],
+    "units": [
+      {
+        "name": "דירה",
+        "rooms": [
+          {
+            "name": "חדר 1",
+            "capacity": 4,
+            "nights": [
+              [],
+              []
+            ]
+          }
+        ]
+      },
+      {
+        "name": "זוהר",
+        "rooms": [
+          {
+            "name": "חדר 1",
+            "capacity": 3,
+            "nights": [
+              [
+                "ספי"
+              ],
+              [
+                "ספי"
+              ]
+            ]
+          },
+          {
+            "name": "חדר 2",
+            "capacity": 3,
+            "nights": [
+              [
+                "נטע אופיר הולטקוויסט"
+              ],
+              [
+                "נטע אופיר הולטקוויסט"
+              ]
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

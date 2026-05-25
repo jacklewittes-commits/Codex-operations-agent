@@ -1,0 +1,263 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://covenantindustries.example/schemas/weekly_plan.schema.json",
+  "title": "Weekly logistics plan renderer payload",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "title",
+    "weekLabel",
+    "days"
+  ],
+  "properties": {
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "weekLabel": {
+      "type": "string",
+      "minLength": 1
+    },
+    "startDate": {
+      "type": "string"
+    },
+    "endDate": {
+      "type": "string"
+    },
+    "site": {
+      "type": "string"
+    },
+    "experimentManager": {
+      "type": "string"
+    },
+    "safetyOfficer": {
+      "type": "string"
+    },
+    "overnight": {
+      "type": "string"
+    },
+    "hostel": {
+      "type": "string"
+    },
+    "bookedUnits": {
+      "type": "string"
+    },
+    "trucksRequired": {
+      "type": "string"
+    },
+    "days": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "vehicles": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/vehiclePlan"
+      }
+    },
+    "staffing": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/staffingExperiment"
+      }
+    },
+    "accommodation": {
+      "$ref": "#/$defs/accommodation"
+    }
+  },
+  "$defs": {
+    "vehiclePlan": {
+      "type": "object",
+      "required": [
+        "name",
+        "days"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "trailerRequired": {
+          "type": "boolean"
+        },
+        "days": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/vehicleDay"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "vehicleDay": {
+      "type": "object",
+      "properties": {
+        "outRoute": {
+          "type": "string"
+        },
+        "retRoute": {
+          "type": "string"
+        },
+        "outTime": {
+          "type": "string"
+        },
+        "retTime": {
+          "type": "string"
+        },
+        "outCmd": {
+          "type": "string"
+        },
+        "retCmd": {
+          "type": "string"
+        },
+        "outP1": {
+          "type": "string"
+        },
+        "outP2": {
+          "type": "string"
+        },
+        "retP1": {
+          "type": "string"
+        },
+        "retP2": {
+          "type": "string"
+        },
+        "outNote": {
+          "type": "string"
+        },
+        "retNote": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "staffingExperiment": {
+      "type": "object",
+      "required": [
+        "name",
+        "days"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "days": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "prefill": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "role": {
+                "type": "string"
+              },
+              "days": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "totals": {
+          "type": "array",
+          "items": {
+            "type": [
+              "integer",
+              "string"
+            ]
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "accommodation": {
+      "type": "object",
+      "required": [
+        "hostel",
+        "nights",
+        "units"
+      ],
+      "properties": {
+        "hostel": {
+          "type": "string"
+        },
+        "nights": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "nightTotals": {
+          "type": "array",
+          "items": {
+            "type": [
+              "integer",
+              "string"
+            ]
+          }
+        },
+        "units": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/accommodationUnit"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "accommodationUnit": {
+      "type": "object",
+      "required": [
+        "name",
+        "rooms"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "rooms": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/room"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "room": {
+      "type": "object",
+      "required": [
+        "name",
+        "capacity"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "capacity": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "nights": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}
