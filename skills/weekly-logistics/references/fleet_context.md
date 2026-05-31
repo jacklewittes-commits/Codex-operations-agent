@@ -11,6 +11,7 @@ This context was extracted from April 2026 weekly plans and PM clarification.
 - There are two trailers. Trailer assignment is weekly/context-dependent.
 - The Hyundais are company cars: `יונדאי I20 1` and `יונדאי I20 2`.
 - The RAV4/Toyota is a company car and may appear in old sheets simply as `טויטה`.
+- The Toyota Yaris cars are company cars: `טויטה יאירס 1`, `טויטה יאירס 2`, and `טויטה יאריס- יקנעם`.
 - The Ducato (`דוקאטו`) is a permanent company van.
 
 ## Rentals
