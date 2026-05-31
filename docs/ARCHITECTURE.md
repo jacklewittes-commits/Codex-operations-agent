@@ -77,7 +77,7 @@ Example:
 experiment-logistics-agent/
 ├── AGENTS.md
 ├── skills/
-│   └── weekly-logistics/
+│   ├── weekly-logistics/
 │       ├── SKILL.md
 │       ├── pm_intake.md
 │       ├── planning_rules.md
@@ -88,6 +88,10 @@ experiment-logistics-agent/
 │           ├── publishing_policy.md
 │           ├── context_relocation.md
 │           └── data_extraction_notes.md
+│   └── food-management/
+│       ├── SKILL.md
+│       └── references/
+│           └── ein_yahav_food_rules.md
 ├── schemas/
 │   └── weekly_plan.schema.json
 ├── planner/
@@ -105,6 +109,7 @@ experiment-logistics-agent/
 │   ├── vehicles.csv
 │   ├── hostels.csv
 │   ├── experiment_sites.csv
+│   ├── food_catering_ein_yahav.csv
 │   └── README.md
 ├── examples/
 ├── outputs/
@@ -164,6 +169,7 @@ Current assumptions:
 - 2 company trailers
 - Hyundais are company vehicles
 - RAV4/Toyota is company vehicle
+- Toyota Yaris cars are company vehicles
 - Jumpy and some others may be rented weekly
 - rental vehicles are common operationally
 
@@ -177,9 +183,15 @@ Current hostels are in עין יהב.
 
 Additional locations and hostels will likely be added later.
 
+### food_catering_ein_yahav.csv
+
+Known Ein Yahav catering items, prices, units, and menu notes extracted from April/May weekly plans.
+
+The ordering heuristics based on historical headcounts live in `skills/food-management/references/ein_yahav_food_rules.md`.
+
 ## Skill Behavior
 
-The skill currently teaches the agent to:
+The weekly logistics skill currently teaches the agent to:
 
 - intake PM context conversationally
 - ask only blocking questions
@@ -189,6 +201,13 @@ The skill currently teaches the agent to:
 - generate the operational Google Sheet
 - return review guidance
 - revise plans iteratively
+
+The food-management skill currently teaches the agent to:
+
+- derive meal headcounts from weekly staffing and drive changes
+- plan Ein Yahav catering lunch quantities
+- separate vegetarian Aroma salad orders from catering quantities
+- flag BBB and BBQ dinner choices that need PM confirmation
 
 ## Current Status
 

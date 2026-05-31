@@ -11,5 +11,5 @@ Source: uploaded April 2026 weekly planning workbooks.
 ## Confidence
 - Members from the embedded renderer roster have higher confidence.
 - Members observed only in weekly sheets are marked with `source=weekly_plans_april_2026` and notes requiring verification.
-- Vehicle ownership/classification reflects PM clarification: pickups, Hyundais, RAV4/Toyota, and Ducato are company assets; many other named cars are weekly rentals.
+- Vehicle ownership/classification reflects PM clarification: pickups, Hyundais, RAV4/Toyota, Toyota Yaris cars, and Ducato are company assets; many other named cars are weekly rentals.
 - Hostel capacities are incomplete and should be corrected from vendor/booking documents.

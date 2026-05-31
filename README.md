@@ -8,7 +8,7 @@ The Google Sheet is the primary deliverable. JSON exists only as internal plumbi
 
 - Intake PM context conversationally.
 - Ask only blocking follow-up questions.
-- Plan staffing, vehicles, trips, and lodging.
+- Plan staffing, vehicles, trips, lodging, and food.
 - Validate operational constraints before publishing.
 - Render the standardized Google Sheet through the Google Apps Script integration.
 - Publish only after PM approval to the approved Drive destination.
@@ -37,10 +37,11 @@ Example: `01-03.06_plan`
 
 - `AGENTS.md` - repo-level operating instructions.
 - `skills/weekly-logistics/` - Codex skill instructions, planning rules, intake behavior, output contract, and references.
+- `skills/food-management/` - meal planning skill for catering, Aroma salads, BBQ, and BBB dinners.
 - `schemas/weekly_plan.schema.json` - internal renderer payload schema.
 - `planner/` - validation, naming helpers, and future deterministic planning modules.
 - `integrations/google_sheets/` - Apps Script renderer, webhook client, and deployment notes.
-- `data/` - structured factual datasets for members, vehicles, sites, and hostels.
+- `data/` - structured factual datasets for members, vehicles, sites, hostels, and food.
 - `examples/` - sample weekly plan payloads for development and testing.
 - `docs/` - architecture and usage notes.
 
@@ -63,6 +64,7 @@ Working:
 - Google Sheets renderer integration.
 - Drive publishing policy and file naming helper.
 - Baseline payload validation.
+- Ein Yahav food-management skill and catering menu baseline.
 
 Known gaps:
 

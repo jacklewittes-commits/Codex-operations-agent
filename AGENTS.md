@@ -18,12 +18,15 @@ The Google Sheet is the primary deliverable. JSON is internal plumbing only. Do 
 - `skills/weekly-logistics/planning_rules.md` — planning and constraint rules.
 - `skills/weekly-logistics/output_contract.md` — required Google Sheet output contract.
 - `skills/weekly-logistics/review_checklist.md` — PM review checklist.
+- `skills/food-management/SKILL.md` — food planning workflow for catering, Aroma, BBQ, and BBB meals.
+- `skills/food-management/references/ein_yahav_food_rules.md` — Ein Yahav quantity model based on historical plans.
 - `schemas/weekly_plan.schema.json` — internal renderer payload schema.
 - `integrations/google_sheets/apps_script.js` — canonical Google Sheet renderer.
 - `integrations/google_sheets/webhook_client.py` — client for the deployed renderer.
 - `integrations/google_sheets/deploy.md` — deployment notes.
 - `planner/` — future deterministic planning modules.
 - `data/` — master data expected by the agent.
+- `data/food_catering_ein_yahav.csv` — known Ein Yahav catering menu and prices.
 - `examples/weekly_plan_example.json` — renderer payload example for development/testing.
 
 ## Default workflow

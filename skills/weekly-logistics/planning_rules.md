@@ -56,4 +56,4 @@ When the PM asks for changes after the sheet is created:
 5. Return the revised sheet link and new flags only.
 
 ## Vendor phase placeholder
-Vendor contact workflows for food, rooms, and other services are out of scope until explicitly added. For now, capture vendor needs as review flags.
+Food quantity planning is handled by `skills/food-management/` when requested. Direct vendor contact workflows for food, rooms, and other services are still out of scope until explicitly added. For now, capture vendor contact needs as review flags.
