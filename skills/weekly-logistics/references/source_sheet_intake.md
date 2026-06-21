@@ -18,7 +18,7 @@ Use this when the PM provides a Google Drive link with partial planning context.
 - Do not edit the source file unless the PM explicitly asks.
 - Read only tabs/ranges needed for the weekly plan.
 - Preserve Hebrew names, locations, vehicles, rooms, and raw cell values exactly.
-- Map source content loosely to `General`, `Team Members`, `Vehicles/Drives`, `Rooms`, `Food`, and notes.
+- Map source content loosely to `איושים`, `שיבוצי רכבים`, `שיבוצי לינה`, `הזמנות אוכל`, and notes.
 
 ## Conflict Handling
 - If chat and source file conflict, use the PM's latest explicit instruction.

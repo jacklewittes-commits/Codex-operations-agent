@@ -1,6 +1,6 @@
 # PM Intake Guide
 
-The PM should speak naturally. Do not ask the PM to write JSON, fill schemas, or know implementation details.
+The PM should speak naturally. Do not ask the PM to write JSON, fill schemas, inspect Apps Script, or know implementation details.
 
 ## Goal
 Convert PM conversation or a linked partial Google Drive file into enough structured information to generate the same weekly logistics Google Sheet.
@@ -46,4 +46,4 @@ Treat these as assumptions or review flags when missing.
 - Exact loading vehicle for non-critical equipment.
 
 ## PM-Facing Response
-Return the Sheet link, assumptions, blocking issues, and PM checklist items needing attention. Never expose internal JSON unless explicitly requested for debugging.
+Return the Google Sheet link as the default response. Share assumptions, blocking issues, or PM checklist items only when they materially affect the plan or the PM asks for them. Never expose internal JSON unless explicitly requested for debugging.

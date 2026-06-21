@@ -6,7 +6,7 @@ description: plan weekly field-experiment logistics from natural-language PM con
 # Weekly Experiment Logistics Skill
 
 ## Product contract
-The primary product is a formatted Google Sheet in the designated Drive folder. The PM should never be asked to write JSON. Internally, create a structured `weekly_plan` object only for validation and rendering.
+The primary product is a formatted Google Sheet in the designated Drive folder. The PM should never be asked to write JSON, inspect Apps Script files, or work through local debug artifacts. Internally, create a structured `weekly_plan` object only for validation and rendering.
 
 ## Required references
 - Read `../../data/README.md` for the current master CSV inventory before relying on repo data files.
@@ -24,9 +24,9 @@ The primary product is a formatted Google Sheet in the designated Drive folder. 
 2. Ask only for blocking missing information. Convert non-blocking gaps into assumptions or review flags.
 3. Build the internal `weekly_plan` payload.
 4. Validate hard constraints and PM operational planning checks: vehicle capacity, trailer license, rental driver permission, trucks, room capacity, gender-separated lodging, required roles, airstrip coordination, fuel sufficiency, equipment loading, rental/lodging handoffs, and PM checklist completeness.
-5. Prepare a draft renderer payload and ask for/receive PM approval before publishing to Drive.
-6. After PM approval, render the Google Sheet using the Apps Script renderer into the designated Drive folder only.
-7. Return the Sheet URL, assumptions, unresolved flags, and the PM checklist items needing attention.
+5. Prepare the plan quietly in the background and keep implementation details out of the PM conversation.
+6. After PM approval, render or update the Google Sheet in the designated Drive folder only.
+7. Return the Google Sheet URL as the primary PM-facing result; include assumptions or flags only when they materially affect execution or the PM asks for them.
 8. For PM revisions, update the internal plan, revalidate, and regenerate/update the Sheet only with PM approval.
 
 ## Data handling
@@ -39,7 +39,7 @@ The primary product is a formatted Google Sheet in the designated Drive folder. 
 ## Google Sheets renderer
 Use `output_contract.md` for PM-facing tab names and `references/publishing_policy.md` for file naming, approval, and Drive destination rules.
 
-Use `integrations/google_sheets/webhook_client.py` when a webhook URL is configured. If the webhook is unavailable, produce and validate the `weekly_plan` payload and explain what renderer configuration is needed.
+Use Google Sheets as the only PM-facing artifact. `integrations/google_sheets/webhook_client.py` and Apps Script files are internal implementation details and should not be surfaced to the PM unless the PM explicitly asks for debugging help.
 
 ## Revision behavior
 When the PM asks for changes, do not restart intake. Identify the changed field or assignment, apply it, check for downstream conflicts, and regenerate/update the sheet. Report only the new link/status and any changed flags.
