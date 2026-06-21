@@ -1,8 +1,24 @@
 
 var FOLDER_ID = "1bXGmaGlUHH25K6O4_WzUAmA8gWR9HjzV";
+var VEHICLE_SHEET_NAME = "שיבוצי רכבים";
+var UPDATED_VEHICLE_SHEET_NAME = "מעודכן שיבוצי רכבים";
+var ACCOMMODATION_SHEET_NAME = " שיבוצי לינה";
+var FOOD_SHEET_NAME = "  הזמנות אוכל";
+var PM_CHECKLIST_SHEET_NAME = "PM Checklist";
 var NAV="#1F3864",RED="#922B21",ORG="#F4B942",YEL="#FFF2CC",SAL="#FCE4D6",LGR="#D9D9D9",SPC="#EBEBEB",PUR="#6B5B8B",LAV="#D9D2E9",WHI="#FFFFFF",WRN="#FFF2CC",F5="#F5F5F5",INP="#EBF5FB",FIX="#F2F3F4",SEC="#2E4057",GRN="#C6EFCE",SRD="#FADADD";
 
 function wrap(){return SpreadsheetApp.WrapStrategy.WRAP;}
+function getOrCreateSheet(ss,name){
+  return ss.getSheetByName(name)||ss.insertSheet(name);
+}
+function resetSheet(sh,cols){
+  sh.clear();
+  sh.clearConditionalFormatRules();
+  if(cols){
+    for(var c=1;c<=cols;c++) sh.setColumnWidth(c,100);
+  }
+  sh.showSheet();
+}
 function hdr(sh,r1,c1,r2,c2,val,bg){
   if(r1!==r2||c1!==c2) sh.getRange(r1,c1,r2-r1+1,c2-c1+1).merge();
   sh.getRange(r1,c1).setValue(val).setBackground(bg).setFontColor(WHI).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle").setWrapStrategy(wrap());
@@ -66,13 +82,14 @@ function buildWeekSetup(ss,d){
   sh.setRowHeight(row,18);
 }
 
-function buildVehicles(ss,wl,days,vehicles){
-  var sh=ss.insertSheet("Vehicle Plan");
+function buildVehicles(ss,wl,days,vehicles,sheetName,hideSheetAfterBuild){
+  var sh=getOrCreateSheet(ss,sheetName||VEHICLE_SHEET_NAME);
+  resetSheet(sh,2+days.length*2);
   var nD=days.length,tc=2+nD*2,i,d,r;
   sh.setColumnWidth(1,200);sh.setColumnWidth(2,110);
   for(i=0;i<nD;i++){sh.setColumnWidth(3+i*2,180);sh.setColumnWidth(4+i*2,180);}
   var row=1;
-  hdr(sh,row,1,row,tc,"VEHICLE PLAN  |  "+wl,RED);sh.setRowHeight(row,30);row++;
+  hdr(sh,row,1,row,tc,"📋  שיבוץ שבועי – הלוך / חזור ",RED);sh.setRowHeight(row,30);row++;
   sh.getRange(row,1).setValue("רכבים").setBackground(RED).setFontColor(WHI).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle");
   sh.getRange(row,2).setValue("פרטים").setBackground(RED).setFontColor(WHI).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle");
   for(i=0;i<nD;i++) hdr(sh,row,3+i*2,row,4+i*2,days[i],RED);
@@ -108,10 +125,13 @@ function buildVehicles(ss,wl,days,vehicles){
     row+=DL.length+3;
   }
   sh.setFrozenRows(3);
+  if(hideSheetAfterBuild) sh.hideSheet();
+  return sh;
 }
 
 function buildStaffing(ss,wl,experiments){
-  var sh=ss.insertSheet("איושים");
+  var sh=getOrCreateSheet(ss,"איושים");
+  resetSheet(sh,2+experiments.reduce(function(sum,e){return sum+e.days.length;},0));
   var tdc=0,i,e,col;
   for(i=0;i<experiments.length;i++) tdc+=experiments[i].days.length;
   var tc=2+tdc;
@@ -132,7 +152,7 @@ function buildStaffing(ss,wl,experiments){
   var LL=[false,false,false,false,false,false,false,false,false,true,true,true,true,true,true,false,true,true,false,false,false];
   for(var ri=0;ri<RL.length;ri++){
     sh.getRange(row,1).setValue(RL[ri]).setBackground(ORG).setFontWeight("bold").setHorizontalAlignment("right").setVerticalAlignment("middle");
-    sh.getRange(row,2).setValue(LL[ri]?"כן":"לא").setBackground(LL[ri]?ORG:LGR).setFontWeight(LL[ri]?"bold":"normal").setHorizontalAlignment("center").setVerticalAlignment("middle");
+    sh.getRange(row,2).setValue("").setBackground(YEL).setHorizontalAlignment("center").setVerticalAlignment("middle");
     col=3;
     for(i=0;i<experiments.length;i++){e=experiments[i];for(di=0;di<e.days.length;di++){
       var val="";
@@ -142,20 +162,21 @@ function buildStaffing(ss,wl,experiments){
     sh.setRowHeight(row,18);row++;
   }
   sh.getRange(row,1).setValue('סה"כ').setBackground(NAV).setFontColor(WHI).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle");
-  sh.getRange(row,2).setBackground(NAV);
+  sh.getRange(row,2).setValue("").setBackground(NAV);
   col=3;
   for(i=0;i<experiments.length;i++){e=experiments[i];for(di=0;di<e.days.length;di++){var cell=sh.getRange(row,col);cell.setBackground(NAV).setFontColor(WHI).setFontWeight("bold").setHorizontalAlignment("center");if(e.totals&&e.totals[di]) cell.setValue(e.totals[di]);col++;}}
   sh.setRowHeight(row,22);sh.setFrozenRows(3);
 }
 
 function buildAccommodation(ss,wl,acc){
-  var sh=ss.insertSheet("שיבוצי לינה");
+  var sh=getOrCreateSheet(ss,ACCOMMODATION_SHEET_NAME);
+  resetSheet(sh,2+acc.nights.length+1);
   var nN=acc.nights.length,tc=2+nN+1,i,n;
   sh.setColumnWidth(1,130);sh.setColumnWidth(2,100);
   for(n=0;n<nN;n++) sh.setColumnWidth(3+n,200);
   sh.setColumnWidth(3+nN,120);
   var row=1;
-  hdr(sh,row,1,row,tc,"ACCOMMODATION  |  "+wl+"  |  "+acc.hostel,PUR);sh.setRowHeight(row,28);row++;
+  hdr(sh,row,1,row,tc,"צימרים",PUR);sh.setRowHeight(row,28);row++;
   sh.getRange(row,1).setValue("צימרים").setBackground(PUR).setFontColor(WHI).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle");
   sh.getRange(row,2).setValue("חדרים").setBackground(PUR).setFontColor(WHI).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle");
   for(n=0;n<nN;n++) sh.getRange(row,3+n).setValue(acc.nights[n]).setBackground(PUR).setFontColor(WHI).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle");
@@ -175,22 +196,34 @@ function buildAccommodation(ss,wl,acc){
   }
   sh.getRange(row,1).setValue('סה"כ:').setFontWeight("bold").setBackground(LGR);
   sh.getRange(row,2).setBackground(LGR);
-  for(n=0;n<nN;n++) sh.getRange(row,3+n).setValue(acc.nightTotals?acc.nightTotals[n]:0).setBackground(LGR).setFontWeight("bold").setHorizontalAlignment("center");
+  for(n=0;n<nN;n++){
+    var count=0;
+    for(i=0;i<acc.units.length;i++){
+      var rooms=acc.units[i].rooms||[];
+      for(var roomIndex=0;roomIndex<rooms.length;roomIndex++){
+        var roomNights=rooms[roomIndex].nights||[];
+        var occupants=roomNights[n]||[];
+        count+=occupants.length;
+      }
+    }
+    sh.getRange(row,3+n).setValue(count).setBackground(LGR).setFontWeight("bold").setHorizontalAlignment("center");
+  }
   sh.getRange(row,3+nN).setBackground(LGR);sh.setFrozenRows(2);
 }
 
 function buildFoodOrders(ss,wl,food){
   food=food||{};
-  var sh=ss.insertSheet("הזמנות אוכל");
+  var sh=getOrCreateSheet(ss,FOOD_SHEET_NAME);
+  resetSheet(sh,18);
   var tc=18,i,row;
   var widths=[180,90,280,18,140,90,18,100,90,90,90,160,180,90,90,90,110,220];
   for(i=0;i<widths.length;i++) sh.setColumnWidth(i+1,widths[i]);
   row=1;
-  hdr(sh,row,1,row,tc,"FOOD ORDER  |  "+wl,SEC);sh.setRowHeight(row,28);row++;
+  hdr(sh,row,1,row,tc,"הזמנות אוכל",SEC);sh.setRowHeight(row,28);row++;
 
-  hdr(sh,row,1,row,3,"Catering Menu Baseline",RED);
-  hdr(sh,row,5,row,6,"Special Orders",RED);
-  hdr(sh,row,8,row,18,"Food Orders",RED);
+  hdr(sh,row,1,row,3,"תפריט בסיס",RED);
+  hdr(sh,row,5,row,6,"מיוחדים",RED);
+  hdr(sh,row,8,row,18,"הזמנה",RED);
   sh.setRowHeight(row,22);row++;
 
   var mh=["שם מנה","מחיר ליחידה","הערות"];
@@ -238,7 +271,8 @@ function buildFoodOrders(ss,wl,food){
 
 function buildPmChecklist(ss,wl,items){
   items=items||[];
-  var sh=ss.insertSheet("PM Checklist");
+  var sh=getOrCreateSheet(ss,PM_CHECKLIST_SHEET_NAME);
+  resetSheet(sh,9);
   var widths=[150,150,360,150,100,160,180,320,90];
   for(var i=0;i<widths.length;i++) sh.setColumnWidth(i+1,widths[i]);
   var row=1,tc=9;
@@ -272,11 +306,13 @@ function buildPmChecklist(ss,wl,items){
     sh.setRowHeight(row,28);row++;
   }
   sh.setFrozenRows(2);
+  return sh;
 }
 
 
 function buildTeamSheet(ss,wl){
-  var sh=ss.insertSheet("צוות");
+  var sh=getOrCreateSheet(ss,"צוות");
+  resetSheet(sh,6);
   sh.setColumnWidth(1,180);sh.setColumnWidth(2,160);sh.setColumnWidth(3,120);sh.setColumnWidth(4,90);sh.setColumnWidth(5,90);sh.setColumnWidth(6,90);
   var row=1;
   hdr(sh,row,1,row,6,"TEAM ROSTER  |  "+wl,NAV);sh.setRowHeight(row,28);row++;
@@ -364,22 +400,31 @@ function buildTeamSheet(ss,wl){
   sh.setFrozenRows(2);
 }
 
+function renderPlan(data){
+  var folder=DriveApp.getFolderById(FOLDER_ID);
+  var ss=SpreadsheetApp.create(data.title||"Weekly Plan");
+  DriveApp.getFileById(ss.getId()).moveTo(folder);
+  var def=ss.getSheets()[0];
+  if(data.staffing) buildStaffing(ss,data.weekLabel,data.staffing);
+  if(data.vehicles){
+    buildVehicles(ss,data.weekLabel,data.days,data.vehicles,VEHICLE_SHEET_NAME,true);
+    buildVehicles(ss,data.weekLabel,data.days,data.vehicles,UPDATED_VEHICLE_SHEET_NAME,false);
+  }
+  if(data.accommodation) buildAccommodation(ss,data.weekLabel,data.accommodation);
+  if(data.foodOrders) buildFoodOrders(ss,data.weekLabel,data.foodOrders);
+  if(data.pmChecklist) buildPmChecklist(ss,data.weekLabel,data.pmChecklist).hideSheet();
+  if(ss.getSheetByName("Week Setup")) ss.deleteSheet(ss.getSheetByName("Week Setup"));
+  if(ss.getSheetByName("Vehicle Plan")) ss.deleteSheet(ss.getSheetByName("Vehicle Plan"));
+  if(ss.getSheetByName("צוות")) ss.deleteSheet(ss.getSheetByName("צוות"));
+  if(ss.getSheets().length>1) ss.deleteSheet(def);
+  return {url:ss.getUrl(),id:ss.getId()};
+}
+
 function doPost(e){
   try{
     var data=JSON.parse(e.postData.contents);
-    var folder=DriveApp.getFolderById(FOLDER_ID);
-    var ss=SpreadsheetApp.create(data.title||"Weekly Plan");
-    DriveApp.getFileById(ss.getId()).moveTo(folder);
-    var def=ss.getSheets()[0];
-    buildWeekSetup(ss,data);
-    if(data.vehicles) buildVehicles(ss,data.weekLabel,data.days,data.vehicles);
-    if(data.staffing) buildStaffing(ss,data.weekLabel,data.staffing);
-    if(data.accommodation) buildAccommodation(ss,data.weekLabel,data.accommodation);
-    if(data.foodOrders) buildFoodOrders(ss,data.weekLabel,data.foodOrders);
-    if(data.pmChecklist) buildPmChecklist(ss,data.weekLabel,data.pmChecklist);
-    buildTeamSheet(ss,data.weekLabel);
-    if(ss.getSheets().length>1) ss.deleteSheet(def);
-    return ContentService.createTextOutput(JSON.stringify({status:"ok",url:ss.getUrl(),id:ss.getId()})).setMimeType(ContentService.MimeType.JSON);
+    var result=renderPlan(data);
+    return ContentService.createTextOutput(JSON.stringify({status:"ok",url:result.url,id:result.id})).setMimeType(ContentService.MimeType.JSON);
   }catch(err){
     return ContentService.createTextOutput(JSON.stringify({status:"error",message:err.toString()})).setMimeType(ContentService.MimeType.JSON);
   }
@@ -387,26 +432,26 @@ function doPost(e){
 
 function testCreate(){
   var data={
-    title:"01-03.06_plan",weekLabel:"עין יהב  |  Sunday - Tuesday  |  01.06.26-03.06.26",
-    startDate:"01/06/26",endDate:"03/06/26",site:"עין יהב",
-    experimentManager:"ספי",safetyOfficer:"נטע אופיר הולטקוויסט",
-    startDay:"ראשון",endDay:"שלישי",overnight:"Yes",
-    hostel:"רגע בערבה",bookedUnits:"דירה, זוהר, בקתה 7, בקתה 8",trucksRequired:"1",
+    title:"00-00.00_plan",weekLabel:"Template Week",
+    startDate:"",endDate:"",site:"",
+    experimentManager:"",safetyOfficer:"",
+    overnight:"Yes",
+    hostel:"",bookedUnits:"",trucksRequired:"",
     days:["יום ראשון","יום שני","יום שלישי"],
     vehicles:[
-      {name:"דוקאטו\nמספר רכב -",trailerRequired:false,days:[{outRoute:"תל אביב -> עין יהב",outTime:"ערב",outCmd:"שי ליסקובסקי",outP1:"אליאור"},{},{retRoute:"עין יהב -> תל אביב",retCmd:"שי ליסקובסקי",retP1:"אליאור"}]},
-      {name:"טנדר #1\n+ מתדלקת סולר\nמספר רכב -",trailerRequired:true,days:[{outRoute:"תל אביב -> עין יהב",outTime:"ערב",outNote:"Trailer license required"},{},{retRoute:"עין יהב -> תל אביב",retNote:"Trailer license required"}]},
-      {name:"טנדר #2\n+ מתדלקת דסל - גדול\nמספר רכב -",trailerRequired:true,days:[{outRoute:"תל אביב -> עין יהב",outTime:"ערב",outNote:"Trailer license required"},{},{retRoute:"עין יהב -> תל אביב",retNote:"Trailer license required"}]},
+      {name:"דוקאטו\nמספר רכב -",trailerRequired:false,days:[{},{},{}]},
+      {name:"טנדר #1\n+ מתדלקת סולר\nמספר רכב -",trailerRequired:true,days:[{},{},{}]},
+      {name:"טנדר #2\n+ מתדלקת דסל - גדול\nמספר רכב -",trailerRequired:true,days:[{},{},{}]},
       {name:"טויטה\nמספר רכב -",trailerRequired:false,days:[{},{},{}]},
-      {name:"משאית 1\nמושכרת",trailerRequired:false,days:[{outRoute:"תל אביב -> עין יהב",outNote:"Driver + escort only"},{},{retRoute:"עין יהב -> תל אביב",retNote:"Driver + escort only"}]},
-      {name:"מושכר 1\nרכב רגיל",trailerRequired:false,days:[{outNote:"קירה cannot drive rental"},{},{}]}
+      {name:"משאית 1\nמושכרת",trailerRequired:false,days:[{},{},{}]},
+      {name:"מושכר 1\nרכב רגיל",trailerRequired:false,days:[{},{},{}]}
     ],
-    staffing:[{name:"עין יהב",days:["ראשון","שני","שלישי"],prefill:[{role:"ניסוי מנהל",days:["ספי","ספי","ספי"]},{role:"בטיחות",days:["נטע אופיר הולטקוויסט","נטע אופיר הולטקוויסט","נטע אופיר הולטקוויסט"]}],totals:[2,2,2]}],
+    staffing:[{name:"אתר ניסוי",days:["ראשון","שני","שלישי"],prefill:[],totals:[]}],
     accommodation:{hostel:"רגע בערבה",nights:["לילה א (ראשון-שני)","לילה ב (שני-שלישי)"],nightTotals:[2,2],units:[
       {name:"דירה",rooms:[{name:"חדר 1",capacity:4,nights:[[],[]]},{name:"חדר 2",capacity:4,nights:[[],[]]},{name:"חדר 3",capacity:4,nights:[[],[]]},{name:"חדר 4",capacity:4,nights:[[],[]]}]},
       {name:"זוהר",rooms:[{name:"חדר 1",capacity:3,nights:[[],[]]},{name:"חדר 2",capacity:3,nights:[[],[]]},{name:"חדר 3",capacity:3,nights:[[],[]]}]},
-      {name:"בקתה 7",rooms:[{name:"חדר 1",capacity:3,nights:[["ספי"],["ספי"]]},{name:"חדר 2",capacity:3,nights:[[],[]]}]},
-      {name:"בקתה 8",rooms:[{name:"חדר 1",capacity:2,nights:[["נטע אופיר הולטקוויסט"],["נטע אופיר הולטקוויסט"]]},{name:"חדר 2",capacity:2,nights:[[],[]]}]},
+      {name:"בקתה 7",rooms:[{name:"חדר 1",capacity:3,nights:[[],[]]},{name:"חדר 2",capacity:3,nights:[[],[]]}]},
+      {name:"בקתה 8",rooms:[{name:"חדר 1",capacity:2,nights:[[],[]]},{name:"חדר 2",capacity:2,nights:[[],[]]}]},
       {name:"שיזף",rooms:[{name:"חדר 1",capacity:3,nights:[[],[]]},{name:"חדר 2",capacity:3,nights:[[],[]]}]}
     ]},
     foodOrders:{
@@ -424,29 +469,10 @@ function testCreate(){
         {item:"אורז/תפו\"א/פסטה ברוטב אדום",unitPrice:200,notes:"4.5 ליטר"},
         {item:"סלט ירקות",unitPrice:100,notes:"ליחידה"}
       ],
-      meals:[
-        {date:"01.06",meal:"צהריים",headcount:22,standardCount:19,vendor:"קייטרינג עין יהב",item:"סטייק פרגית",amount:25,unitPrice:45,orderChannel:"WhatsApp",notes:""},
-        {date:"01.06",meal:"צהריים",headcount:22,standardCount:19,vendor:"Aroma",item:"Aroma salad",amount:1,orderChannel:"manual",notes:"special order"}
-      ]
+      meals:[]
     },
-    pmChecklist:[
-      {category:"Airstrip",timing:"Pre-experiment",task:"Confirm flight day/time with יונתן",owner:"PM",status:"Verify",due:"Before publishing plan",relatedPlanArea:"General",notes:"Required for every airstrip flight activity",blocking:true},
-      {category:"Fuel",timing:"Departure/loading",task:"Confirm jet-fuel tank truck starts with enough דס״ל for planned flights",owner:"PM / Logistics",status:"Open",due:"Before departure",relatedPlanArea:"Vehicles/Drives",notes:"Tank capacity up to 320 liters; use actual starting quantity",blocking:true},
-      {category:"Fuel",timing:"During experiment",task:"Plan שדה תימן refill drive if flight profile exceeds starting דס״ל quantity",owner:"Logistics",status:"Verify",trigger:"When forecast fuel burn approaches tank reserve",relatedPlanArea:"Vehicles/Drives",notes:"Use the jet-fuel tank truck, coordinate with סתיו, refuel in multiples of 20 liters",blocking:false},
-      {category:"Equipment",timing:"Departure/loading",task:"Load black jerrycans for tarmac refueling away from the truck",owner:"Logistics",status:"Open",due:"Before loading closes",relatedPlanArea:"Equipment",notes:"Use when refueling location may differ from truck location",blocking:false}
-    ]
+    pmChecklist:[]
   };
-  var folder=DriveApp.getFolderById(FOLDER_ID);
-  var ss=SpreadsheetApp.create(data.title);
-  DriveApp.getFileById(ss.getId()).moveTo(folder);
-  var def=ss.getSheets()[0];
-  buildWeekSetup(ss,data);
-  buildVehicles(ss,data.weekLabel,data.days,data.vehicles);
-  buildStaffing(ss,data.weekLabel,data.staffing);
-  buildAccommodation(ss,data.weekLabel,data.accommodation);
-  buildFoodOrders(ss,data.weekLabel,data.foodOrders);
-  buildPmChecklist(ss,data.weekLabel,data.pmChecklist);
-  buildTeamSheet(ss,data.weekLabel);
-  if(ss.getSheets().length>1) ss.deleteSheet(def);
-  Logger.log("Created: "+ss.getUrl());
+  var result=renderPlan(data);
+  Logger.log("Created: "+result.url);
 }
