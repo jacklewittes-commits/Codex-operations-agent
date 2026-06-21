@@ -44,7 +44,8 @@ Observed lunch orders compared with staffing headcounts:
 
 ## Vegetarian and special diets
 
-- Vegetarian lunch default: one Aroma cafe salad per vegetarian. Record the salad choice if known; otherwise mark `Aroma salad choice pending`.
+- Before finalizing, read `data/food_specials.csv` and compare the special counts against the PM context. If the PM text conflicts with the CSV, flag the mismatch.
+- Aroma lunch default: use one `Aroma salad` row per person whose lunch is handled by Aroma. Do not ask for exact salad type unless the PM volunteers it.
 - Do not replace all catering sides for vegetarians; shared carbs and `סלט ירקות` still count toward total headcount.
 - For gluten-free needs, prefer explicit item notes such as `ללא גלוטן` and avoid relying on `שניצלים`.
 
@@ -54,3 +55,7 @@ The reviewed workbooks do not contain reliable BBB or BBQ quantities. For now:
 
 - BBB dinner: plan one burger/meal per person, one vegetarian alternative per vegetarian, and ask PM to confirm sides/drinks.
 - BBQ dinner: ask PM for the meat package or historical BBQ quantities before finalizing; otherwise provide a per-head placeholder and flag it as unvalidated.
+
+## Flexible ordering
+
+The catering CSV is a baseline menu, not a locked menu. The PM may request other food by WhatsApp, email, phone, or manual coordination. When that happens, keep the item in the food order tab with its channel and mark unknown prices or vendor confirmations as review flags.

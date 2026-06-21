@@ -8,5 +8,6 @@ Current CSVs:
 - `hostels.csv`: lodging inventory by location, hostel, unit, room, and capacity.
 - `experiment_sites.csv`: known experiment sites/locations.
 - `food_catering_ein_yahav.csv`: known Ein Yahav catering items, prices, units, and menu notes.
+- `food_specials.csv`: current non-standard food counts by special category.
 
 Former misplaced CSV content that described agent behavior has been moved to `skills/weekly-logistics/` and its `references/` folder.

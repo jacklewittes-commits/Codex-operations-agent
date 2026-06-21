@@ -41,7 +41,7 @@ Example: `01-03.06_plan`
 - `schemas/weekly_plan.schema.json` - internal renderer payload schema.
 - `planner/` - validation, naming helpers, and future deterministic planning modules.
 - `integrations/google_sheets/` - Apps Script renderer, webhook client, and deployment notes.
-- `data/` - structured factual datasets for members, vehicles, sites, hostels, and food.
+- `data/` - structured factual datasets for members, vehicles, sites, hostels, food menus, and special food counts.
 - `examples/` - sample weekly plan payloads for development and testing.
 - `docs/` - architecture and usage notes.
 
@@ -64,7 +64,7 @@ Working:
 - Google Sheets renderer integration.
 - Drive publishing policy and file naming helper.
 - Baseline payload validation.
-- Ein Yahav food-management skill and catering menu baseline.
+- Ein Yahav food-management skill, catering menu baseline, and special food counts.
 
 Known gaps:
 

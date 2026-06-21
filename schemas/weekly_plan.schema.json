@@ -66,6 +66,15 @@
     },
     "accommodation": {
       "$ref": "#/$defs/accommodation"
+    },
+    "foodOrders": {
+      "$ref": "#/$defs/foodOrders"
+    },
+    "pmChecklist": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/pmChecklistItem"
+      }
     }
   },
   "$defs": {
@@ -255,6 +264,189 @@
               "type": "string"
             }
           }
+        }
+      },
+      "additionalProperties": true
+    },
+    "foodOrders": {
+      "type": "object",
+      "properties": {
+        "specials": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/foodSpecial"
+          }
+        },
+        "menuItems": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/foodMenuItem"
+          }
+        },
+        "meals": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/foodOrder"
+          }
+        },
+        "orders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/foodOrder"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "foodSpecial": {
+      "type": "object",
+      "properties": {
+        "special": {
+          "type": "string"
+        },
+        "Specials": {
+          "type": "string"
+        },
+        "amount": {
+          "type": [
+            "integer",
+            "string"
+          ]
+        },
+        "Amount": {
+          "type": [
+            "integer",
+            "string"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "foodMenuItem": {
+      "type": "object",
+      "properties": {
+        "item": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "unitPrice": {
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "unit_price_nis": {
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "foodOrder": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string"
+        },
+        "meal": {
+          "type": "string"
+        },
+        "headcount": {
+          "type": [
+            "integer",
+            "string"
+          ]
+        },
+        "standardCount": {
+          "type": [
+            "integer",
+            "string"
+          ]
+        },
+        "vendor": {
+          "type": "string"
+        },
+        "item": {
+          "type": "string"
+        },
+        "amount": {
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "unitPrice": {
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "total": {
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "orderChannel": {
+          "type": "string"
+        },
+        "channel": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "pmChecklistItem": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "timing": {
+          "type": "string"
+        },
+        "task": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "Open",
+            "Verify",
+            "Done",
+            "Blocked"
+          ]
+        },
+        "due": {
+          "type": "string"
+        },
+        "trigger": {
+          "type": "string"
+        },
+        "relatedPlanArea": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        },
+        "blocking": {
+          "type": [
+            "boolean",
+            "string"
+          ]
         }
       },
       "additionalProperties": true

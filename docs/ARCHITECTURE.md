@@ -44,7 +44,7 @@ The agent may internally generate structured objects, validation payloads, and i
 
 The system is not just a planning chatbot. It is an operational logistics planning system whose output is a formatted Google Sheet used by the experiment team during execution.
 
-The renderer creates tabs, formats sheets, and produces staffing plans, lodging assignments, vehicle assignments, and operational review sheets.
+The renderer creates tabs, formats sheets, and produces staffing plans, lodging assignments, vehicle assignments, food order plans, and operational review sheets.
 
 ## Drive Publishing Policy
 
@@ -110,6 +110,7 @@ experiment-logistics-agent/
 │   ├── hostels.csv
 │   ├── experiment_sites.csv
 │   ├── food_catering_ein_yahav.csv
+│   ├── food_specials.csv
 │   └── README.md
 ├── examples/
 ├── outputs/
@@ -189,6 +190,10 @@ Known Ein Yahav catering items, prices, units, and menu notes extracted from Apr
 
 The ordering heuristics based on historical headcounts live in `skills/food-management/references/ein_yahav_food_rules.md`.
 
+### food_specials.csv
+
+Current non-standard food counts by special category. The food-management skill reads this before finalizing catering counts and the renderer includes it in the `הזמנות אוכל` tab.
+
 ## Skill Behavior
 
 The weekly logistics skill currently teaches the agent to:
@@ -207,6 +212,8 @@ The food-management skill currently teaches the agent to:
 - derive meal headcounts from weekly staffing and drive changes
 - plan Ein Yahav catering lunch quantities
 - separate vegetarian Aroma salad orders from catering quantities
+- use `food_specials.csv` to confirm non-standard food counts
+- keep WhatsApp/email/phone/manual food ordering channels available in the plan
 - flag BBB and BBQ dinner choices that need PM confirmation
 
 ## Current Status

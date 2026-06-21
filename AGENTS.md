@@ -27,6 +27,7 @@ The Google Sheet is the primary deliverable. JSON is internal plumbing only. Do 
 - `planner/` — future deterministic planning modules.
 - `data/` — master data expected by the agent.
 - `data/food_catering_ein_yahav.csv` — known Ein Yahav catering menu and prices.
+- `data/food_specials.csv` — current non-standard food counts for food planning.
 - `examples/weekly_plan_example.json` — renderer payload example for development/testing.
 
 ## Default workflow

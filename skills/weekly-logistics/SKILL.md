@@ -13,17 +13,19 @@ The primary product is a formatted Google Sheet in the designated Drive folder. 
 - Read `planning_rules.md` when building or revising the logistics plan.
 - Read `output_contract.md` before generating or reporting the sheet.
 - Read `review_checklist.md` before returning the PM-facing completion message.
+- Read `references/source_sheet_intake.md` when the PM provides a partial Google Drive file as input.
+- Read `../food-management/SKILL.md` when the PM asks for food planning, meal quantities, catering, Aroma, BBQ, BBB, WhatsApp/email food orders, or special food requirements.
 - Use `../../schemas/weekly_plan.schema.json` as the internal renderer payload shape.
 - Use `../../integrations/google_sheets/webhook_client.py` to call the deployed Google Sheets renderer when a webhook URL is configured.
 
 ## Core workflow
-1. Collect PM context naturally: week, site, experiment days, attendees, vehicles, lodging, and special trips.
+1. Collect PM context from natural language, a partial source file, or both; always produce the same standard output Sheet.
 2. Ask only for blocking missing information. Convert non-blocking gaps into assumptions or review flags.
 3. Build the internal `weekly_plan` payload.
-4. Validate hard constraints: vehicle capacity, trailer license, rental driver permission, trucks, room capacity, gender-separated lodging, required roles.
+4. Validate hard constraints and PM operational planning checks: vehicle capacity, trailer license, rental driver permission, trucks, room capacity, gender-separated lodging, required roles, airstrip coordination, fuel sufficiency, equipment loading, rental/lodging handoffs, and PM checklist completeness.
 5. Prepare a draft renderer payload and ask for/receive PM approval before publishing to Drive.
 6. After PM approval, render the Google Sheet using the Apps Script renderer into the designated Drive folder only.
-7. Return the Sheet URL, assumptions, unresolved flags, and a concise PM review checklist.
+7. Return the Sheet URL, assumptions, unresolved flags, and the PM checklist items needing attention.
 8. For PM revisions, update the internal plan, revalidate, and regenerate/update the Sheet only with PM approval.
 
 ## Data handling
@@ -33,16 +35,9 @@ The primary product is a formatted Google Sheet in the designated Drive folder. 
 - If a repository data file is missing or malformed, report the exact file and continue only with explicit PM confirmation.
 
 ## Google Sheets renderer
-The current renderer is stored under `integrations/google_sheets/`. It creates the operational tabs: `Week Setup`, `Vehicle Plan`, `איושים`, `שיבוצי לינה`, and `צוות`. The renderer payload `title` must follow `aa-bb.mm_plan` and the Apps Script must publish only to folder ID `1bXGmaGlUHH25K6O4_WzUAmA8gWR9HjzV` after PM approval.
+Use `output_contract.md` for PM-facing tab names and `references/publishing_policy.md` for file naming, approval, and Drive destination rules.
 
-To create a sheet from a prepared payload:
-
-```bash
-GOOGLE_SHEETS_WEBHOOK_URL="https://script.google.com/macros/s/.../exec" \
-python integrations/google_sheets/webhook_client.py --input examples/weekly_plan_example.json
-```
-
-If the webhook is unavailable, produce and validate the `weekly_plan` payload and explain that renderer deployment/configuration is needed before the Google Sheet can be uploaded.
+Use `integrations/google_sheets/webhook_client.py` when a webhook URL is configured. If the webhook is unavailable, produce and validate the `weekly_plan` payload and explain what renderer configuration is needed.
 
 ## Revision behavior
 When the PM asks for changes, do not restart intake. Identify the changed field or assignment, apply it, check for downstream conflicts, and regenerate/update the sheet. Report only the new link/status and any changed flags.

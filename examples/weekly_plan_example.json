@@ -1,6 +1,6 @@
 {
-  "title": "Sample_Weekly_Plan",
-  "weekLabel": "Sample Site | Sunday-Tuesday | 01.06.26",
+  "title": "01-03.06_plan",
+  "weekLabel": "עין יהב | Sunday-Tuesday | 01.06.26-03.06.26",
   "startDate": "01/06/26",
   "endDate": "03/06/26",
   "site": "עין יהב",
@@ -122,5 +122,126 @@
         ]
       }
     ]
-  }
+  },
+  "foodOrders": {
+    "specials": [
+      {
+        "special": "Vegan",
+        "amount": 0
+      },
+      {
+        "special": "Vegetarian",
+        "amount": 0
+      },
+      {
+        "special": "Pescatarian",
+        "amount": 1
+      },
+      {
+        "special": "Gluten Free",
+        "amount": 1
+      },
+      {
+        "special": "Keto",
+        "amount": 1
+      },
+      {
+        "special": "Lactose Free",
+        "amount": 0
+      }
+    ],
+    "menuItems": [
+      {
+        "item": "שניצלים",
+        "unitPrice": 17,
+        "notes": "מינימום 15 יחידות"
+      },
+      {
+        "item": "סטייק פרגית",
+        "unitPrice": 45,
+        "notes": "מינימום 8 יחידות"
+      },
+      {
+        "item": "אורז/תפו\"א/פסטה ברוטב אדום",
+        "unitPrice": 200,
+        "notes": "4.5 ליטר"
+      },
+      {
+        "item": "סלט ירקות",
+        "unitPrice": 100,
+        "notes": "ליחידה"
+      }
+    ],
+    "meals": [
+      {
+        "date": "01.06",
+        "meal": "צהריים",
+        "headcount": 22,
+        "standardCount": 19,
+        "vendor": "קייטרינג עין יהב",
+        "item": "סטייק פרגית",
+        "amount": 25,
+        "unitPrice": 45,
+        "orderChannel": "WhatsApp",
+        "notes": ""
+      },
+      {
+        "date": "01.06",
+        "meal": "צהריים",
+        "headcount": 22,
+        "standardCount": 19,
+        "vendor": "Aroma",
+        "item": "Aroma salad",
+        "amount": 1,
+        "orderChannel": "manual",
+        "notes": "special order"
+      }
+    ]
+  },
+  "pmChecklist": [
+    {
+      "category": "Airstrip",
+      "timing": "Pre-experiment",
+      "task": "Confirm flight day/time with יונתן",
+      "owner": "PM",
+      "status": "Verify",
+      "due": "Before publishing plan",
+      "relatedPlanArea": "General",
+      "notes": "Required for every airstrip flight activity",
+      "blocking": true
+    },
+    {
+      "category": "Fuel",
+      "timing": "Departure/loading",
+      "task": "Confirm the jet-fuel tank truck starts with enough דס״ל for planned flights",
+      "owner": "PM / Logistics",
+      "status": "Open",
+      "due": "Before departure",
+      "relatedPlanArea": "Vehicles/Drives",
+      "notes": "Tank capacity is up to 320 liters; use the actual starting quantity",
+      "blocking": true
+    },
+    {
+      "category": "Fuel",
+      "timing": "During experiment",
+      "task": "Plan שדה תימן refill drive if flight profile exceeds starting דס״ל quantity",
+      "owner": "Logistics",
+      "status": "Verify",
+      "trigger": "When forecast fuel burn approaches tank reserve",
+      "relatedPlanArea": "Vehicles/Drives",
+      "notes": "Use the jet-fuel tank truck, coordinate with סתיו, refuel in multiples of 20 liters",
+      "blocking": false
+    },
+    {
+      "category": "Equipment",
+      "timing": "Departure/loading",
+      "task": "Load black jerrycans for tarmac refueling away from the truck",
+      "owner": "Logistics",
+      "status": "Open",
+      "due": "Before loading closes",
+      "relatedPlanArea": "Equipment",
+      "notes": "Use when refueling location may differ from truck location",
+      "blocking": false
+    }
+  ]
 }

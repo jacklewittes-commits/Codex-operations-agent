@@ -1,31 +1,19 @@
 # PM Review Checklist
 
-After generating the Google Sheet, ask the PM to review these items.
+After generating the Google Sheet, ask the PM to review the plan before publishing it to the team.
 
-## Week Setup
-- Dates and week label are correct.
-- Site/location is correct.
-- Experiment manager and safety officer are correct.
-- Active vehicles and booked lodging units match what is actually reserved.
+## Always Review
+- `General`: dates, site, manager, safety officer, active vehicles, lodging, and trucks.
+- `Team Members`: attendance, required roles, loading staff, and plausible daily totals.
+- `Vehicles/Drives`: outbound, return, internal drives, commanders, passengers, rentals, and truck rows.
+- `Rooms`: every overnight attendee has a valid room and night assignment.
+- `Food`: headcounts, standard meals, special food counts, vendors, and order channels.
+- `PM Checklist`: all open operational tasks are visible with owner, timing, status, and blockers.
 
-## Vehicle Plan
-- Every person has an outbound and return option when needed.
-- Special/internal trips are shown with route, time, vehicle, driver/commander, and passengers.
-- Trailer vehicles have licensed commanders.
-- Rental drivers are allowed to drive rentals.
-- Truck rows reflect the real truck plan.
-
-## Staffing
-- Required roles are filled for each experiment day.
-- People who load equipment are marked correctly.
-- Attendance totals look plausible.
-
-## Accommodation
-- Every overnight attendee has a room for every night they stay.
-- Room capacities are not exceeded.
-- Gender separation is respected.
-- People arriving/leaving on different days have the correct nights.
+## Domain Review
+Use `references/pm_review_items.md` for detailed airstrip, fuel, rental, equipment, lodging, trucking, and checklist review prompts.
 
 ## Flags
 - Resolve all blocking flags before publishing the plan to the team.
-- Non-blocking assumptions can remain if the PM accepts them.
+- Non-blocking assumptions can remain only if the PM accepts them.
+- Items already completed are marked `Done` only when the PM explicitly confirmed completion.

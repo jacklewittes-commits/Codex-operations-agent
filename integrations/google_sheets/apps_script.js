@@ -45,6 +45,9 @@ function buildWeekSetup(ss,d){
     ["יונדאי I20 1","No","No","",""],
     ["יונדאי I20 2","No","No","",""],
     ["טויטה","Yes","No","",""],
+    ["טויטה יאירס 1","No","No","",""],
+    ["טויטה יאירס 2","No","No","",""],
+    ["טויטה יאריס- יקנעם","No","No","",""],
     ["משאית 1 (hired)","Yes","No","","Driver + escort only"],
     ["מושכר 1 (rental)","No","No","",""],
     ["מושכר 2 (rental)","No","No","",""]
@@ -176,6 +179,101 @@ function buildAccommodation(ss,wl,acc){
   sh.getRange(row,3+nN).setBackground(LGR);sh.setFrozenRows(2);
 }
 
+function buildFoodOrders(ss,wl,food){
+  food=food||{};
+  var sh=ss.insertSheet("הזמנות אוכל");
+  var tc=18,i,row;
+  var widths=[180,90,280,18,140,90,18,100,90,90,90,160,180,90,90,90,110,220];
+  for(i=0;i<widths.length;i++) sh.setColumnWidth(i+1,widths[i]);
+  row=1;
+  hdr(sh,row,1,row,tc,"FOOD ORDER  |  "+wl,SEC);sh.setRowHeight(row,28);row++;
+
+  hdr(sh,row,1,row,3,"Catering Menu Baseline",RED);
+  hdr(sh,row,5,row,6,"Special Orders",RED);
+  hdr(sh,row,8,row,18,"Food Orders",RED);
+  sh.setRowHeight(row,22);row++;
+
+  var mh=["שם מנה","מחיר ליחידה","הערות"];
+  for(i=0;i<mh.length;i++) sh.getRange(row,1+i).setValue(mh[i]).setBackground(ORG).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle");
+  sh.getRange(row,5).setValue("Specials").setBackground(ORG).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle");
+  sh.getRange(row,6).setValue("Amount").setBackground(ORG).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle");
+  var oh=["תאריך","צהריים / ערב","אנשים","סטנדרטי","ספק","בחירת מנה","כמות","מחיר ליחידה","סה\"כ","ערוץ הזמנה","הערות"];
+  for(i=0;i<oh.length;i++) sh.getRange(row,8+i).setValue(oh[i]).setBackground(ORG).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle").setWrapStrategy(wrap());
+  sh.setRowHeight(row,22);row++;
+
+  var menu=food.menuItems||[];
+  var specials=food.specials||[];
+  var orders=food.meals||food.orders||[];
+  var maxRows=Math.max(menu.length,specials.length,orders.length,1);
+  for(i=0;i<maxRows;i++){
+    if(menu[i]){
+      dc(sh,row,1,menu[i].item||menu[i].name||"",WHI);
+      dc(sh,row,2,menu[i].unitPrice||menu[i].unit_price_nis||"",WHI);
+      dc(sh,row,3,menu[i].notes||"",WHI);
+    }
+    if(specials[i]){
+      dc(sh,row,5,specials[i].special||specials[i].Specials||"",specials[i].amount||specials[i].Amount?WRN:WHI);
+      dc(sh,row,6,specials[i].amount||specials[i].Amount||0,specials[i].amount||specials[i].Amount?WRN:WHI);
+    }
+    if(orders[i]){
+      var o=orders[i];
+      var total=o.total||"";
+      if(total===""&&o.amount&&o.unitPrice) total=Number(o.amount)*Number(o.unitPrice);
+      dc(sh,row,8,o.date||"",WHI);
+      dc(sh,row,9,o.meal||"",WHI);
+      dc(sh,row,10,o.headcount||"",WHI);
+      dc(sh,row,11,o.standardCount||"",WHI);
+      dc(sh,row,12,o.vendor||"",WHI);
+      dc(sh,row,13,o.item||"",WHI);
+      dc(sh,row,14,o.amount||"",WHI);
+      dc(sh,row,15,o.unitPrice||"",WHI);
+      dc(sh,row,16,total,WHI);
+      dc(sh,row,17,o.orderChannel||o.channel||"",WHI);
+      dc(sh,row,18,o.notes||"",WHI);
+    }
+    sh.setRowHeight(row,22);row++;
+  }
+  sh.setFrozenRows(2);
+}
+
+function buildPmChecklist(ss,wl,items){
+  items=items||[];
+  var sh=ss.insertSheet("PM Checklist");
+  var widths=[150,150,360,150,100,160,180,320,90];
+  for(var i=0;i<widths.length;i++) sh.setColumnWidth(i+1,widths[i]);
+  var row=1,tc=9;
+  hdr(sh,row,1,row,tc,"PM CHECKLIST  |  "+wl,SEC);sh.setRowHeight(row,28);row++;
+  var hh=["Category","Timing","Task","Owner","Status","Due / trigger","Related plan area","Notes","Blocking?"];
+  for(i=0;i<hh.length;i++){
+    sh.getRange(row,i+1).setValue(hh[i]).setBackground(ORG).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle").setWrapStrategy(wrap());
+  }
+  sh.setRowHeight(row,24);row++;
+  if(items.length===0){
+    dc(sh,row,1,"No checklist items provided",F5);
+    sh.getRange(row,1,1,tc).merge().setHorizontalAlignment("center");
+    sh.setRowHeight(row,24);
+  }
+  for(i=0;i<items.length;i++){
+    var item=items[i]||{};
+    var status=item.status||"Open";
+    var isBlocking=item.blocking===true||String(item.blocking||"").toLowerCase()==="true"||String(item.blocking||"").toLowerCase()==="yes";
+    var statusBg=status==="Done"?GRN:(status==="Blocked"?SRD:(status==="Verify"?WRN:WHI));
+    dc(sh,row,1,item.category||"",WHI);
+    dc(sh,row,2,item.timing||"",WHI);
+    dc(sh,row,3,item.task||"",isBlocking?WRN:WHI);
+    dc(sh,row,4,item.owner||"",WHI);
+    dc(sh,row,5,status,statusBg);
+    dc(sh,row,6,item.due||item.trigger||"",WHI);
+    dc(sh,row,7,item.relatedPlanArea||"",F5);
+    dc(sh,row,8,item.notes||"",WHI);
+    dc(sh,row,9,isBlocking?"Yes":"No",isBlocking?SRD:GRN);
+    sh.getRange(row,5).setHorizontalAlignment("center");
+    sh.getRange(row,9).setHorizontalAlignment("center").setFontWeight("bold");
+    sh.setRowHeight(row,28);row++;
+  }
+  sh.setFrozenRows(2);
+}
+
 
 function buildTeamSheet(ss,wl){
   var sh=ss.insertSheet("צוות");
@@ -277,6 +375,8 @@ function doPost(e){
     if(data.vehicles) buildVehicles(ss,data.weekLabel,data.days,data.vehicles);
     if(data.staffing) buildStaffing(ss,data.weekLabel,data.staffing);
     if(data.accommodation) buildAccommodation(ss,data.weekLabel,data.accommodation);
+    if(data.foodOrders) buildFoodOrders(ss,data.weekLabel,data.foodOrders);
+    if(data.pmChecklist) buildPmChecklist(ss,data.weekLabel,data.pmChecklist);
     buildTeamSheet(ss,data.weekLabel);
     if(ss.getSheets().length>1) ss.deleteSheet(def);
     return ContentService.createTextOutput(JSON.stringify({status:"ok",url:ss.getUrl(),id:ss.getId()})).setMimeType(ContentService.MimeType.JSON);
@@ -287,7 +387,7 @@ function doPost(e){
 
 function testCreate(){
   var data={
-    title:"Ein_Yahav_01-06-26",weekLabel:"Ein Yahav  |  Sunday - Tuesday  |  01.06.26",
+    title:"01-03.06_plan",weekLabel:"עין יהב  |  Sunday - Tuesday  |  01.06.26-03.06.26",
     startDate:"01/06/26",endDate:"03/06/26",site:"עין יהב",
     experimentManager:"ספי",safetyOfficer:"נטע אופיר הולטקוויסט",
     startDay:"ראשון",endDay:"שלישי",overnight:"Yes",
@@ -308,7 +408,33 @@ function testCreate(){
       {name:"בקתה 7",rooms:[{name:"חדר 1",capacity:3,nights:[["ספי"],["ספי"]]},{name:"חדר 2",capacity:3,nights:[[],[]]}]},
       {name:"בקתה 8",rooms:[{name:"חדר 1",capacity:2,nights:[["נטע אופיר הולטקוויסט"],["נטע אופיר הולטקוויסט"]]},{name:"חדר 2",capacity:2,nights:[[],[]]}]},
       {name:"שיזף",rooms:[{name:"חדר 1",capacity:3,nights:[[],[]]},{name:"חדר 2",capacity:3,nights:[[],[]]}]}
-    ]}
+    ]},
+    foodOrders:{
+      specials:[
+        {special:"Vegan",amount:0},
+        {special:"Vegetarian",amount:0},
+        {special:"Pescatarian",amount:1},
+        {special:"Gluten Free",amount:1},
+        {special:"Keto",amount:1},
+        {special:"Lactose Free",amount:0}
+      ],
+      menuItems:[
+        {item:"שניצלים",unitPrice:17,notes:"מינימום 15 יחידות"},
+        {item:"סטייק פרגית",unitPrice:45,notes:"מינימום 8 יחידות"},
+        {item:"אורז/תפו\"א/פסטה ברוטב אדום",unitPrice:200,notes:"4.5 ליטר"},
+        {item:"סלט ירקות",unitPrice:100,notes:"ליחידה"}
+      ],
+      meals:[
+        {date:"01.06",meal:"צהריים",headcount:22,standardCount:19,vendor:"קייטרינג עין יהב",item:"סטייק פרגית",amount:25,unitPrice:45,orderChannel:"WhatsApp",notes:""},
+        {date:"01.06",meal:"צהריים",headcount:22,standardCount:19,vendor:"Aroma",item:"Aroma salad",amount:1,orderChannel:"manual",notes:"special order"}
+      ]
+    },
+    pmChecklist:[
+      {category:"Airstrip",timing:"Pre-experiment",task:"Confirm flight day/time with יונתן",owner:"PM",status:"Verify",due:"Before publishing plan",relatedPlanArea:"General",notes:"Required for every airstrip flight activity",blocking:true},
+      {category:"Fuel",timing:"Departure/loading",task:"Confirm jet-fuel tank truck starts with enough דס״ל for planned flights",owner:"PM / Logistics",status:"Open",due:"Before departure",relatedPlanArea:"Vehicles/Drives",notes:"Tank capacity up to 320 liters; use actual starting quantity",blocking:true},
+      {category:"Fuel",timing:"During experiment",task:"Plan שדה תימן refill drive if flight profile exceeds starting דס״ל quantity",owner:"Logistics",status:"Verify",trigger:"When forecast fuel burn approaches tank reserve",relatedPlanArea:"Vehicles/Drives",notes:"Use the jet-fuel tank truck, coordinate with סתיו, refuel in multiples of 20 liters",blocking:false},
+      {category:"Equipment",timing:"Departure/loading",task:"Load black jerrycans for tarmac refueling away from the truck",owner:"Logistics",status:"Open",due:"Before loading closes",relatedPlanArea:"Equipment",notes:"Use when refueling location may differ from truck location",blocking:false}
+    ]
   };
   var folder=DriveApp.getFolderById(FOLDER_ID);
   var ss=SpreadsheetApp.create(data.title);
@@ -318,6 +444,8 @@ function testCreate(){
   buildVehicles(ss,data.weekLabel,data.days,data.vehicles);
   buildStaffing(ss,data.weekLabel,data.staffing);
   buildAccommodation(ss,data.weekLabel,data.accommodation);
+  buildFoodOrders(ss,data.weekLabel,data.foodOrders);
+  buildPmChecklist(ss,data.weekLabel,data.pmChecklist);
   buildTeamSheet(ss,data.weekLabel);
   if(ss.getSheets().length>1) ss.deleteSheet(def);
   Logger.log("Created: "+ss.getUrl());

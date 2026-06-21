@@ -3,48 +3,47 @@
 The PM should speak naturally. Do not ask the PM to write JSON, fill schemas, or know implementation details.
 
 ## Goal
-Convert a PM conversation into enough structured information to generate the standard weekly logistics Google Sheet.
+Convert PM conversation or a linked partial Google Drive file into enough structured information to generate the same weekly logistics Google Sheet.
 
-## Acceptable PM input
-The PM may provide any subset of:
-- Week dates and experiment days.
-- Site/location.
-- Experiment manager and safety officer.
-- Team members known to attend.
-- Vehicles already committed, including trucks, pickups, rentals, trailers, or special vehicles.
-- Lodging already booked, including hostel name, units, rooms, and nights.
-- Special trips during the experiment, including origin, destination, purpose, timing, candidate vehicle, and driver if known.
-- Constraints or preferences, such as people who must travel together, cannot drive, arrive late, leave early, or need a specific room.
+## Acceptable PM Input
+- Week dates, experiment days, site, manager, and safety officer.
+- Known team members, attendance changes, arrivals, departures, and sleepover intent.
+- Vehicles, rentals, trucks, trailers, special drives, routes, timing, and drivers.
+- Lodging already booked, including hostel, units, rooms, and nights.
+- Food needs, special orders, or vendor/contact constraints.
+- Airstrip constraints: flight window, יונתן coordination, other people on site, after-dark departure, and external company activity.
+- Fuel (`דס״ל`) context: flight profile, jet-fuel tank truck, current liters, black jerrycans, and possible `שדה תימן` refill drive.
+- Equipment and transport context: critical items, loading vehicle, required arrival time, platforms/assets, and truck load shape.
 
-## Intake behavior
+## Intake Behavior
 1. Capture everything the PM gives, even if incomplete.
 2. Normalize dates, locations, names, vehicles, and lodging against repository data when possible.
-3. Ask only blocking questions before generating a sheet. Non-blocking gaps should become assumptions or review flags.
-4. Prefer one concise follow-up question at a time when a blocker exists.
+3. Ask only blocking questions before generating a sheet.
+4. Convert non-blocking gaps into assumptions, PM checklist rows, or review flags.
 5. Preserve Hebrew names exactly as supplied or as found in data files.
 
-## Blocking fields before sheet generation
+## Prompt References
+- Use `references/pm_operational_domains.md` as the quiet PM mental checklist.
+- Use `references/source_sheet_intake.md` when the PM provides a Google Drive link.
+- Ask one concise follow-up at a time when a blocker exists.
+
+## Blocking Fields
 - Week label or date range.
 - At least one experiment site/location.
 - Experiment days or date span.
-- Experiment manager.
-- Safety officer, if required by operation policy.
+
+## Non-Blocking Fields
+Treat these as assumptions or review flags when missing.
+
+- Experiment manager or safety officer.
 - Active vehicle set or instruction to infer from team size and site requirements.
-- Lodging source for overnight experiments: booked units/rooms or instruction to allocate from available inventory.
-
-## Non-blocking fields
-Treat these as assumptions or review flags when missing:
-- Exact license plates.
-- Exact vehicle commander for non-trailer cars.
+- Lodging source; do not assume lodging is needed for one-day experiments.
+- Exact license plates or non-trailer vehicle commander.
 - Passenger order within a vehicle.
-- Precise meal/food vendor requirements.
-- Vendor contacts.
+- Precise meal vendor requirements or vendor contacts.
+- Exact current `דס״ל` tank quantity, if the PM can review before publication.
+- Exact black jerrycan count, if tarmac refueling is possible but not confirmed.
+- Exact loading vehicle for non-critical equipment.
 
-## PM-facing response after generation
-Return only operationally useful information:
-- Google Sheet link.
-- What the agent assumed.
-- Conflicts or unresolved risks.
-- Review checklist.
-
-Never expose the internal weekly_plan JSON unless the user explicitly asks for debugging or development details.
+## PM-Facing Response
+Return the Sheet link, assumptions, blocking issues, and PM checklist items needing attention. Never expose internal JSON unless explicitly requested for debugging.
