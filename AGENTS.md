@@ -13,22 +13,16 @@ The Google Sheet is the primary deliverable. JSON is internal plumbing only. Do 
 - State assumptions and unresolved flags clearly.
 
 ## Important repository paths
-- `skills/weekly-logistics/SKILL.md` — primary workflow instructions.
-- `skills/weekly-logistics/pm_intake.md` — natural-language intake behavior.
-- `skills/weekly-logistics/planning_rules.md` — planning and constraint rules.
-- `skills/weekly-logistics/output_contract.md` — required Google Sheet output contract.
-- `skills/weekly-logistics/review_checklist.md` — PM review checklist.
-- `skills/food-management/SKILL.md` — food planning workflow for catering, Aroma, BBQ, and BBB meals.
-- `skills/food-management/references/ein_yahav_food_rules.md` — Ein Yahav quantity model based on historical plans.
+- `skills/weekly-logistics/` — intake, planning rules, output contract, review checklist, and references.
+- `skills/food-management/` — food planning workflow and Ein Yahav quantity rules.
+- `data/README.md` — inventory of master CSV files; key files include `members.csv`, `vehicles.csv`, `hostels.csv`, `experiment_sites.csv`, `food_catering_ein_yahav.csv`, and `food_specials.csv`.
 - `schemas/weekly_plan.schema.json` — internal renderer payload schema.
-- `integrations/google_sheets/apps_script.js` — canonical Google Sheet renderer.
-- `integrations/google_sheets/webhook_client.py` — client for the deployed renderer.
-- `integrations/google_sheets/deploy.md` — deployment notes.
-- `planner/` — future deterministic planning modules.
-- `data/` — master data expected by the agent.
-- `data/food_catering_ein_yahav.csv` — known Ein Yahav catering menu and prices.
-- `data/food_specials.csv` — current non-standard food counts for food planning.
+- `integrations/google_sheets/` — Apps Script renderer, webhook client, and deploy notes.
 - `examples/weekly_plan_example.json` — renderer payload example for development/testing.
+
+## Documentation rule
+- Keep `README.md`, `AGENTS.md`, and skill docs at 50 lines or fewer.
+- When a doc grows past 50 lines, split detailed material into referenced files instead of extending the main doc.
 
 ## Default workflow
 1. Let the PM describe next week naturally.
@@ -41,10 +35,7 @@ The Google Sheet is the primary deliverable. JSON is internal plumbing only. Do 
 
 ## Required source data
 Before deterministic planning, verify these exist and are valid CSVs when needed:
-- `data/members.csv`
-- `data/vehicles.csv`
-- `data/experiment_sites.csv`
-- `data/hostels.csv`
+- `data/members.csv`, `data/vehicles.csv`, `data/experiment_sites.csv`, `data/hostels.csv`, `data/food_catering_ein_yahav.csv`, `data/food_specials.csv`
 
 If a file is missing or not a valid CSV, report the exact file. The PM may still provide missing facts manually for a one-off plan.
 

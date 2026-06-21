@@ -9,6 +9,7 @@ description: plan weekly field-experiment logistics from natural-language PM con
 The primary product is a formatted Google Sheet in the designated Drive folder. The PM should never be asked to write JSON. Internally, create a structured `weekly_plan` object only for validation and rendering.
 
 ## Required references
+- Read `../../data/README.md` for the current master CSV inventory before relying on repo data files.
 - Read `pm_intake.md` when collecting natural-language PM context.
 - Read `planning_rules.md` when building or revising the logistics plan.
 - Read `output_contract.md` before generating or reporting the sheet.
@@ -33,6 +34,7 @@ The primary product is a formatted Google Sheet in the designated Drive folder. 
 - Preserve Hebrew names, room names, vehicle names, and locations exactly.
 - Never invent people, vehicles, rooms, vendors, or site rules.
 - If a repository data file is missing or malformed, report the exact file and continue only with explicit PM confirmation.
+- Keep `README.md`, `AGENTS.md`, and skill docs at 50 lines or fewer; split longer guidance into referenced docs.
 
 ## Google Sheets renderer
 Use `output_contract.md` for PM-facing tab names and `references/publishing_policy.md` for file naming, approval, and Drive destination rules.
