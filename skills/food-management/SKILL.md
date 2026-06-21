@@ -48,6 +48,10 @@ Give the PM a meal-by-meal order plan with:
 - vendor;
 - ordered items and quantities;
 - order channel when known;
+- headcount, standard catering count, and special-order counts;
+- vendor;
+- ordered items and quantities;
+- order channel when known;
 - assumptions and unresolved choices.
 
 Do not expose JSON unless the PM explicitly asks for an internal payload.

@@ -48,3 +48,5 @@ When the PM asks for changes, update the existing plan, revalidate downstream co
 
 ## Vendor Placeholder
 Food planning lives in `skills/food-management/`. Sending vendor messages requires explicit PM approval and available channel access.
+## Vendor Placeholder
+Food quantity planning lives in `skills/food-management/` when requested. Direct vendor contact workflows for food, rooms, and other services remain out of scope until explicitly added. For now, capture vendor contact needs as review flags, and do not send vendor messages without explicit PM approval and available channel access.
