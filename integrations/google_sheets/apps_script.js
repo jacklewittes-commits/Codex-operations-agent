@@ -28,6 +28,85 @@ function inp(sh,r,c,v,bg){sh.getRange(r,c).setValue(v||"").setBackground(bg||INP
 function ntt(sh,r,c,v){sh.getRange(r,c).setValue(v||"").setBackground("#FAFAFA").setFontColor("#888888").setFontSize(9).setVerticalAlignment("middle");}
 function spc(sh,r,n){sh.getRange(r,1,1,n).setBackground(SPC);sh.setRowHeight(r,6);}
 function dc(sh,r,c,v,bg){sh.getRange(r,c).setValue(v||"").setBackground(bg||WHI).setVerticalAlignment("middle").setWrapStrategy(wrap());}
+function foodItemName(item){return item.item||item.name||"";}
+function foodItemPrice(item){
+  return item.unitPrice!==undefined&&item.unitPrice!==""?item.unitPrice:(item.unit_price_nis!==undefined?item.unit_price_nis:"");
+}
+function foodItemUnit(item){return item.unit||"";}
+function foodItemNotes(item){return item.notes||"";}
+function defaultFoodCatalog(){
+  return [
+    {"item":"סיר ממולאים","unitPrice":330,"unit":"pot","notes":"בשרי/טבעוני; פלפל/כרוב"},
+    {"item":"סיר יפרח","unitPrice":650,"unit":"pot","notes":"עלי גפן ובצלים ממולאים כל טוב; טבעוני"},
+    {"item":"סיר קובה טבעוני/בשר","unitPrice":250,"unit":"pot","notes":"טבעוני/בשרי; 20 יחידות; מרק לבחירה"},
+    {"item":"קוסקוס","unitPrice":250,"unit":"tray","notes":"4.5 ליטר מתאים לכ-10 סועדים"},
+    {"item":"סיר מרק לקוסקוס","unitPrice":250,"unit":"pot","notes":""},
+    {"item":"סיר מפרום","unitPrice":330,"unit":"pot","notes":"לצד הקוסקוס; תפוא ממולא בשר"},
+    {"item":"סיר ירכי עוף עם גרגירי חומס","unitPrice":300,"unit":"pot","notes":"סיר 10 ירכי עוף עם גרגרי חומוס"},
+    {"item":"סלט מיונז","unitPrice":60,"unit":"box","notes":"סלטים מבושלים באריזה של חצי ליטר; תפוא ביצה קשה ומלפפון חמוץ"},
+    {"item":"סלט פלפל קלוי","unitPrice":60,"unit":"box","notes":"סלטים מבושלים באריזה של חצי ליטר"},
+    {"item":"מטבוחה","unitPrice":60,"unit":"box","notes":"סלטים מבושלים באריזה של חצי ליטר"},
+    {"item":"חצילים בטחינה/מיונז","unitPrice":60,"unit":"box","notes":"סלטים מבושלים באריזה של חצי ליטר"},
+    {"item":"סלק מרוקאי","unitPrice":60,"unit":"box","notes":"סלטים מבושלים באריזה של חצי ליטר"},
+    {"item":"גזק מרוקאי","unitPrice":60,"unit":"box","notes":"סלטים מבושלים באריזה של חצי ליטר"},
+    {"item":"חצילים בתחמיץ","unitPrice":60,"unit":"box","notes":"סלטים מבושלים באריזה של חצי ליטר"},
+    {"item":"סלט ביצים","unitPrice":60,"unit":"box","notes":"סלטים מבושלים באריזה של חצי ליטר"},
+    {"item":"כבד קצוץ","unitPrice":60,"unit":"box","notes":"סלטים מבושלים באריזה של חצי ליטר"},
+    {"item":"צלי בקר","unitPrice":200,"unit":"liter","notes":"ליטר כ-4 פרוסות; גוש שלם 800 ש\"ח"},
+    {"item":"שניצלים","unitPrice":17,"unit":"piece","notes":"מינימום 15 יחידות"},
+    {"item":"קציצות בקר","unitPrice":300,"unit":"tray","notes":"ברוטב עגבניות עם שעועית ירוקה; מגש"},
+    {"item":"פלוב בוכרי","unitPrice":550,"unit":"tray","notes":"4.5 ליטר"},
+    {"item":"דגים מרוקאיים","unitPrice":250,"unit":"tray","notes":"250 ש\"ח ל-5 יחידות; תוספת דג 40 ש\"ח"},
+    {"item":"סופריטו","unitPrice":300,"unit":"tray","notes":"תפוא וקציצות/עוף"},
+    {"item":"פאי רועים","unitPrice":250,"unit":"tray","notes":""},
+    {"item":"פדתאי תאילנדי צמחוני","unitPrice":150,"unit":"tray","notes":""},
+    {"item":"פדתאי תאילנדי עוף","unitPrice":200,"unit":"tray","notes":""},
+    {"item":"אורז/תפו\"א/פסטה ברוטב אדום","unitPrice":200,"unit":"tray","notes":"4.5 ליטר"},
+    {"item":"מוקפץ איטריות אורז עוף/טופו","unitPrice":300,"unit":"tray","notes":"עוף או טופו לפי צורך"},
+    {"item":"לביבות תפו\"א","unitPrice":150,"unit":"tray","notes":"15-20 יחידות"},
+    {"item":"אורז פרסי ירוק","unitPrice":250,"unit":"tray","notes":"4.5 ליטר"},
+    {"item":"סטייק פרגית","unitPrice":45,"unit":"piece","notes":"מינימום 8 יחידות"},
+    {"item":"קובה","unitPrice":130,"unit":"piece","notes":"מינימום 10 יחידות"},
+    {"item":"פשטידת מחמר מרוקאית","unitPrice":180,"unit":"tray","notes":""},
+    {"item":"סלט ירקות","unitPrice":100,"unit":"tray","notes":"ליחידה"}
+  ];
+}
+function mergedFoodCatalog(menu){
+  var base=defaultFoodCatalog(),byName={},merged=[],i,name,item;
+  for(i=0;i<base.length;i++){
+    item=base[i];
+    name=foodItemName(item);
+    byName[name]=true;
+    merged.push(item);
+  }
+  for(i=0;i<(menu||[]).length;i++){
+    item=menu[i]||{};
+    name=foodItemName(item);
+    if(!name) continue;
+    if(byName[name]){
+      for(var mi=0;mi<merged.length;mi++){
+        if(foodItemName(merged[mi])===name){
+          merged[mi]={
+            item:name,
+            unitPrice:foodItemPrice(item)!==""?foodItemPrice(item):foodItemPrice(merged[mi]),
+            unit:foodItemUnit(item)||foodItemUnit(merged[mi]),
+            notes:foodItemNotes(item)||foodItemNotes(merged[mi])
+          };
+          break;
+        }
+      }
+    }else{
+      byName[name]=true;
+      merged.push({
+        item:name,
+        unitPrice:foodItemPrice(item),
+        unit:foodItemUnit(item),
+        notes:foodItemNotes(item)
+      });
+    }
+  }
+  return merged;
+}
 
 function buildWeekSetup(ss,d){
   var sh=ss.insertSheet("Week Setup");
@@ -148,6 +227,7 @@ function buildStaffing(ss,wl,experiments){
   col=3;
   for(i=0;i<experiments.length;i++){e=experiments[i];for(var di=0;di<e.days.length;di++){sh.getRange(row,col).setValue(e.days[di]).setBackground(NAV).setFontColor(WHI).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle");col++;}}
   sh.setRowHeight(row,18);row++;
+  var bodyStartRow=row;
   var RL=["ניסוי מנהל","חוץ מטיס","חוץ מטיס","פנים מטיס","פנים מטיס","בקרה מהנדס","בקרה מהנדס","מוביל מהנדס","מהנדס","מטוסים טכנאי","מטוסים טכנאי","מטוסים טכנאי","בטיחות","אופרציה","אופרציה","אופרציה","לוגיסטיקה","לוגיסטיקה","לוגיסטיקה","קרקעי מערך","קרקעי מערך"];
   var LL=[false,false,false,false,false,false,false,false,false,true,true,true,true,true,true,false,true,true,false,false,false];
   for(var ri=0;ri<RL.length;ri++){
@@ -161,10 +241,16 @@ function buildStaffing(ss,wl,experiments){
     }}
     sh.setRowHeight(row,18);row++;
   }
+  var totalRow=row;
   sh.getRange(row,1).setValue('סה"כ').setBackground(NAV).setFontColor(WHI).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle");
   sh.getRange(row,2).setValue("").setBackground(NAV);
   col=3;
   for(i=0;i<experiments.length;i++){e=experiments[i];for(di=0;di<e.days.length;di++){var cell=sh.getRange(row,col);cell.setBackground(NAV).setFontColor(WHI).setFontWeight("bold").setHorizontalAlignment("center");if(e.totals&&e.totals[di]) cell.setValue(e.totals[di]);col++;}}
+  if(tc>=3){
+    sh.getRange(3,3,1,tc-2).setBackground(NAV).setFontColor(WHI).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle");
+    sh.getRange(bodyStartRow,3,totalRow-bodyStartRow,tc-2).setBackground(YEL).setHorizontalAlignment("center").setVerticalAlignment("middle").setWrapStrategy(wrap());
+    sh.getRange(totalRow,3,1,tc-2).setBackground(NAV).setFontColor(WHI).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle");
+  }
   sh.setRowHeight(row,22);sh.setFrozenRows(3);
 }
 
@@ -214,59 +300,81 @@ function buildAccommodation(ss,wl,acc){
 function buildFoodOrders(ss,wl,food){
   food=food||{};
   var sh=getOrCreateSheet(ss,FOOD_SHEET_NAME);
-  resetSheet(sh,18);
-  var tc=18,i,row;
-  var widths=[180,90,280,18,140,90,18,100,90,90,90,160,180,90,90,90,110,220];
+  resetSheet(sh,16);
+  var tc=16,i,row;
+  var widths=[220,170,90,18,90,110,90,90,160,220,90,90,110,120,110,260];
   for(i=0;i<widths.length;i++) sh.setColumnWidth(i+1,widths[i]);
   row=1;
   hdr(sh,row,1,row,tc,"הזמנות אוכל",SEC);sh.setRowHeight(row,28);row++;
 
-  hdr(sh,row,1,row,3,"תפריט בסיס",RED);
-  hdr(sh,row,5,row,6,"מיוחדים",RED);
-  hdr(sh,row,8,row,18,"הזמנה",RED);
+  hdr(sh,row,1,row,3,"מיוחדים",RED);
+  hdr(sh,row,5,row,16,"הזמנה",RED);
   sh.setRowHeight(row,22);row++;
 
-  var mh=["שם מנה","מחיר ליחידה","הערות"];
-  for(i=0;i<mh.length;i++) sh.getRange(row,1+i).setValue(mh[i]).setBackground(ORG).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle");
-  sh.getRange(row,5).setValue("Specials").setBackground(ORG).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle");
-  sh.getRange(row,6).setValue("Amount").setBackground(ORG).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle");
-  var oh=["תאריך","צהריים / ערב","אנשים","סטנדרטי","ספק","בחירת מנה","כמות","מחיר ליחידה","סה\"כ","ערוץ הזמנה","הערות"];
-  for(i=0;i<oh.length;i++) sh.getRange(row,8+i).setValue(oh[i]).setBackground(ORG).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle").setWrapStrategy(wrap());
+  var shh=["הערות","Specials","Amount"];
+  for(i=0;i<shh.length;i++) sh.getRange(row,1+i).setValue(shh[i]).setBackground(ORG).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle").setWrapStrategy(wrap());
+  var oh=["תאריך","צהריים / ערב","אנשים","סטנדרטי","ספק","בחירת מנה","כמות","יחידה","מחיר ליחידה","סה\"כ","ערוץ הזמנה","הערות"];
+  for(i=0;i<oh.length;i++) sh.getRange(row,5+i).setValue(oh[i]).setBackground(ORG).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle").setWrapStrategy(wrap());
   sh.setRowHeight(row,22);row++;
 
-  var menu=food.menuItems||[];
+  var menu=mergedFoodCatalog(food.menuCatalog||food.fullMenu||food.menuItems||[]);
   var specials=food.specials||[];
   var orders=food.meals||food.orders||[];
-  var maxRows=Math.max(menu.length,specials.length,orders.length,1);
+  var orderStartRow=row;
+  var maxRows=Math.max(specials.length,orders.length,8);
   for(i=0;i<maxRows;i++){
-    if(menu[i]){
-      dc(sh,row,1,menu[i].item||menu[i].name||"",WHI);
-      dc(sh,row,2,menu[i].unitPrice||menu[i].unit_price_nis||"",WHI);
-      dc(sh,row,3,menu[i].notes||"",WHI);
-    }
     if(specials[i]){
-      dc(sh,row,5,specials[i].special||specials[i].Specials||"",specials[i].amount||specials[i].Amount?WRN:WHI);
-      dc(sh,row,6,specials[i].amount||specials[i].Amount||0,specials[i].amount||specials[i].Amount?WRN:WHI);
+      dc(sh,row,1,specials[i].notes||"",WHI);
+      dc(sh,row,2,specials[i].special||specials[i].Specials||"",specials[i].amount||specials[i].Amount?WRN:WHI);
+      dc(sh,row,3,specials[i].amount||specials[i].Amount||0,specials[i].amount||specials[i].Amount?WRN:WHI);
     }
     if(orders[i]){
       var o=orders[i];
       var total=o.total||"";
       if(total===""&&o.amount&&o.unitPrice) total=Number(o.amount)*Number(o.unitPrice);
-      dc(sh,row,8,o.date||"",WHI);
-      dc(sh,row,9,o.meal||"",WHI);
-      dc(sh,row,10,o.headcount||"",WHI);
-      dc(sh,row,11,o.standardCount||"",WHI);
-      dc(sh,row,12,o.vendor||"",WHI);
-      dc(sh,row,13,o.item||"",WHI);
-      dc(sh,row,14,o.amount||"",WHI);
-      dc(sh,row,15,o.unitPrice||"",WHI);
-      dc(sh,row,16,total,WHI);
-      dc(sh,row,17,o.orderChannel||o.channel||"",WHI);
-      dc(sh,row,18,o.notes||"",WHI);
+      dc(sh,row,5,o.date||"",WHI);
+      dc(sh,row,6,o.meal||"",WHI);
+      dc(sh,row,7,o.headcount||"",WHI);
+      dc(sh,row,8,o.standardCount||"",WHI);
+      dc(sh,row,9,o.vendor||"",WHI);
+      dc(sh,row,10,o.item||"",WHI);
+      dc(sh,row,11,o.amount||"",WHI);
+      dc(sh,row,12,o.unit||"",WHI);
+      dc(sh,row,13,o.unitPrice||"",WHI);
+      dc(sh,row,14,total,WHI);
+      dc(sh,row,15,o.orderChannel||o.channel||"",WHI);
+      dc(sh,row,16,o.notes||"",WHI);
     }
     sh.setRowHeight(row,22);row++;
   }
-  sh.setFrozenRows(2);
+  var catalogTitleRow=row+1;
+  hdr(sh,catalogTitleRow,1,catalogTitleRow,4,"מחירון אוכל עין יהב",NAV);sh.setRowHeight(catalogTitleRow,24);
+  var catalogHeaderRow=catalogTitleRow+1;
+  var ch=["שם מנה","מחיר ליחידה","יחידה","הערות"];
+  for(i=0;i<ch.length;i++) sh.getRange(catalogHeaderRow,1+i).setValue(ch[i]).setBackground(ORG).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle").setWrapStrategy(wrap());
+  sh.setRowHeight(catalogHeaderRow,22);
+  var catalogStartRow=catalogHeaderRow+1;
+  for(i=0;i<menu.length;i++){
+    dc(sh,catalogStartRow+i,1,foodItemName(menu[i]),WHI);
+    dc(sh,catalogStartRow+i,2,foodItemPrice(menu[i]),WHI);
+    dc(sh,catalogStartRow+i,3,foodItemUnit(menu[i]),WHI);
+    dc(sh,catalogStartRow+i,4,foodItemNotes(menu[i]),WHI);
+    sh.setRowHeight(catalogStartRow+i,22);
+  }
+  var catalogEndRow=catalogStartRow+Math.max(menu.length-1,0);
+  if(menu.length){
+    var itemValidation=SpreadsheetApp.newDataValidation().requireValueInRange(sh.getRange(catalogStartRow,1,menu.length,1),true).setAllowInvalid(true).build();
+    sh.getRange(orderStartRow,10,maxRows,1).setDataValidation(itemValidation);
+    for(i=0;i<maxRows;i++){
+      var currentRow=orderStartRow+i;
+      if(!sh.getRange(currentRow,12).getValue()) sh.getRange(currentRow,12).setFormula('=IF(J'+currentRow+'="","",IFERROR(VLOOKUP(J'+currentRow+',$A$'+catalogStartRow+':$D$'+catalogEndRow+',3,FALSE),""))');
+      if(!sh.getRange(currentRow,13).getValue()) sh.getRange(currentRow,13).setFormula('=IF(J'+currentRow+'="","",IFERROR(VLOOKUP(J'+currentRow+',$A$'+catalogStartRow+':$D$'+catalogEndRow+',2,FALSE),""))');
+      if(!sh.getRange(currentRow,14).getValue()) sh.getRange(currentRow,14).setFormula('=IF(OR(K'+currentRow+'="",M'+currentRow+'=""),"",K'+currentRow+'*M'+currentRow+')');
+    }
+  }
+  sh.getRange(orderStartRow,13,maxRows,2).setNumberFormat('₪#,##0.00');
+  if(menu.length) sh.getRange(catalogStartRow,2,menu.length,1).setNumberFormat('₪#,##0.00');
+  sh.setFrozenRows(3);
 }
 
 function buildPmChecklist(ss,wl,items){

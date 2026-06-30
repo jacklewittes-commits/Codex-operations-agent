@@ -283,6 +283,18 @@
             "$ref": "#/$defs/foodMenuItem"
           }
         },
+        "menuCatalog": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/foodMenuItem"
+          }
+        },
+        "fullMenu": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/foodMenuItem"
+          }
+        },
         "meals": {
           "type": "array",
           "items": {
@@ -343,6 +355,9 @@
             "string"
           ]
         },
+        "unit": {
+          "type": "string"
+        },
         "notes": {
           "type": "string"
         }
@@ -381,6 +396,9 @@
             "number",
             "string"
           ]
+        },
+        "unit": {
+          "type": "string"
         },
         "unitPrice": {
           "type": [

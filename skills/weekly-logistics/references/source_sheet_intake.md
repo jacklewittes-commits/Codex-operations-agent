@@ -5,6 +5,7 @@ Use this when the PM provides a Google Drive link with partial planning context.
 ## Supported Flows
 - Option 1: PM describes the experiment in chat and asks the agent to plan the rest.
 - Option 2: PM provides a partial Google Sheet or doc with team members, vehicles, rooms, food, or notes.
+- Option 3: PM provides a weekly plan with team members already planned, and the agent completes vehicles, rooms, food, and related logistics around that staffing plan.
 - Hybrid: PM provides both chat context and a source file; use both.
 - In every flow, produce the same standard output Sheet defined in `output_contract.md`.
 
@@ -29,3 +30,4 @@ Use this when the PM provides a Google Drive link with partial planning context.
 - Build the same internal `weekly_plan` regardless of intake mode.
 - Validate the same constraints and generate the same standard Sheet.
 - Add `PM Checklist` rows for follow-ups discovered in the source file, such as TBD drivers, unconfirmed rooms, or fuel/refill tasks.
+- Before filling food automatically, ask whether the PM has weekly food preferences or wants the agent to plan meals from attendance and overnight counts.

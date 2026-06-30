@@ -22,12 +22,13 @@ The primary product is a formatted Google Sheet in the designated Drive folder. 
 ## Core workflow
 1. Collect PM context from natural language, a partial source file, or both; always produce the same standard output Sheet.
 2. Ask only for blocking missing information. Convert non-blocking gaps into assumptions or review flags.
-3. Build the internal `weekly_plan` payload.
-4. Validate hard constraints and PM operational planning checks: vehicle capacity, trailer license, rental driver permission, trucks, room capacity, gender-separated lodging, required roles, airstrip coordination, fuel sufficiency, equipment loading, rental/lodging handoffs, and PM checklist completeness.
-5. Prepare the plan quietly in the background and keep implementation details out of the PM conversation.
-6. After PM approval, render or update the Google Sheet in the designated Drive folder only.
-7. Return the Google Sheet URL as the primary PM-facing result; include assumptions or flags only when they materially affect execution or the PM asks for them.
-8. For PM revisions, update the internal plan, revalidate, and regenerate/update the Sheet only with PM approval.
+3. If the PM did not specify food, ask whether the PM wants to choose food preferences for the week or wants the agent to plan meals automatically from attendance and overnight counts.
+4. Build the internal `weekly_plan` payload.
+5. Validate hard constraints and PM operational planning checks: vehicle capacity, trailer license, rental driver permission, trucks, room capacity, gender-separated lodging, required roles, airstrip coordination, fuel sufficiency, equipment loading, rental/lodging handoffs, and PM checklist completeness.
+6. Prepare the plan quietly in the background and keep implementation details out of the PM conversation.
+7. After PM approval, render or update the Google Sheet in the designated Drive folder only.
+8. Return the Google Sheet URL as the primary PM-facing result; include assumptions or flags only when they materially affect execution or the PM asks for them.
+9. For PM revisions, update the internal plan, revalidate, and regenerate/update the Sheet only with PM approval.
 
 ## Data handling
 - Always respond to the PM in English.
