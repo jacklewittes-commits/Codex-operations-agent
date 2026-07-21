@@ -508,11 +508,138 @@ function buildTeamSheet(ss,wl){
   sh.setFrozenRows(2);
 }
 
+var MONTH_NAMES_HE=["ינואר","פברואר","מרץ","אפריל","מאי","יוני","יולי","אוגוסט","ספטמבר","אוקטובר","נובמבר","דצמבר"];
+var DAY_NAMES_HE=["ראשון","שני","שלישי","רביעי","חמישי","שישי","שבת"];
+var CAL_BLUE="#315A89",CAL_HDR="#D3E2FF",CAL_DATE="#F8F8FF",CAL_LOC="#D9EAD3",CAL_ROW="#D9D9D9",CAL_GROUP="#CCCCCC",CAL_REQ="#D9D9D9",CAL_CONSTRAINT_LABEL="#E0E0E0",CAL_CONSTRAINT="#FAFAFA",CAL_WRAP="#A4C2F4",CAL_TASK_HDR="#4A525D",CAL_TASK_SUB="#E0E3E8";
+
+function pad2(n){return n<10?"0"+n:String(n);}
+function dateKey(d){return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate());}
+function listText(v){
+  if(!v) return "";
+  if(Object.prototype.toString.call(v)==="[object Array]") return v.map(function(x){return "- "+String(x).replace(/^\s*-\s*/,"");}).join("\n");
+  return String(v);
+}
+function indexByDate(items){
+  var by={},i,it,k;
+  for(i=0;i<(items||[]).length;i++){
+    it=items[i]||{}; k=it.date||it.day||"";
+    if(!k) continue;
+    if(!by[k]) by[k]=[];
+    by[k].push(it);
+  }
+  return by;
+}
+function itemsText(items,field){
+  var out=[],i,j,v;
+  for(i=0;i<(items||[]).length;i++){
+    v=items[i][field];
+    if(!v) continue;
+    if(Object.prototype.toString.call(v)==="[object Array]"){
+      for(j=0;j<v.length;j++) if(v[j]) out.push(v[j]);
+    }else{
+      out.push(v);
+    }
+  }
+  return listText(out);
+}
+function monthCalendarDefaults(d){
+  d=d||{};
+  var now=new Date(),m=Number(d.month||now.getMonth()+1),y=Number(d.year||now.getFullYear());
+  return {
+    year:y,month:m,
+    title:d.title||("חודש "+MONTH_NAMES_HE[m-1]+" - גאנט ניסויים"),
+    tabName:d.tabName||(MONTH_NAMES_HE[m-1]+" Calendar"),
+    airstrips:d.airstrips||[],
+    envelopes:d.envelopes||[],
+    tasks:d.tasks||[],
+    entries:d.entries||[]
+  };
+}
+function buildMonthCalendar(ss,data){
+  var d=monthCalendarDefaults(data),sh=getOrCreateSheet(ss,d.tabName),i,w,c,r,dt,k,entries,byDate=indexByDate(d.entries);
+  resetSheet(sh,20);
+  sh.setRightToLeft(true);
+  sh.setColumnWidth(1,145);
+  for(c=2;c<=8;c++) sh.setColumnWidth(c,140);
+  sh.setColumnWidth(9,18);
+  sh.setColumnWidths(10,2,118);
+  sh.setColumnWidth(12,46);
+  sh.setColumnWidth(13,118);
+  sh.setColumnWidths(14,2,46);
+  sh.setColumnWidth(16,190);sh.setColumnWidth(17,82);sh.setColumnWidth(18,180);
+  sh.setColumnWidths(19,2,46);
+
+  hdr(sh,2,2,2,8,d.title,CAL_BLUE);
+  sh.getRange(3,1,1,8).setBackground(CAL_HDR).setFontWeight("bold");
+  for(i=0;i<DAY_NAMES_HE.length;i++) sh.getRange(3,2+i).setValue(DAY_NAMES_HE[i]);
+  sh.getRange(1,1,60,8).setHorizontalAlignment("right").setVerticalAlignment("middle").setWrapStrategy(wrap());
+
+  var first=new Date(d.year,d.month-1,1),start=new Date(first);
+  start.setDate(first.getDate()-first.getDay());
+  var labels=["","מנחת","תכולות","דרישות","גופים","אילוצי אופרציה","אילוצי טכנאים","אילוצי מטיסים","מעטפת"];
+  for(w=0;w<6;w++){
+    r=4+w*9;
+    for(i=0;i<labels.length;i++) sh.getRange(r+i,1).setValue(labels[i]);
+    sh.getRange(r,1,1,8).setBackground(CAL_DATE);
+    sh.getRange(r+1,1,1,8).setBackground(WHI);
+    sh.getRange(r+2,1,1,8).setBackground(WHI);
+    sh.getRange(r+3,1,1,8).setBackground(WHI);
+    sh.getRange(r+4,1,1,8).setBackground(WHI);
+    sh.getRange(r+5,1,3,1).setBackground(CAL_CONSTRAINT_LABEL).setFontWeight("normal").setFontSize(9);
+    sh.getRange(r+5,2,3,7).setBackground(CAL_CONSTRAINT).setFontWeight("normal");
+    sh.getRange(r+8,1,1,8).setBackground(WHI);
+    sh.getRange(r+1,1).setBackground("#EFEFEF");
+    sh.getRange(r+2,1).setBackground(CAL_ROW);
+    sh.getRange(r+3,1).setBackground(CAL_REQ);
+    sh.getRange(r+4,1).setBackground(CAL_GROUP);
+    sh.getRange(r+8,1).setBackground("#B7B7B7");
+    sh.setRowHeight(r,22);
+    sh.setRowHeight(r+1,30);
+    sh.setRowHeight(r+2,78);
+    sh.setRowHeight(r+3,66);
+    sh.setRowHeight(r+4,66);
+    sh.setRowHeights(r+5,3,34);
+    sh.setRowHeight(r+8,34);
+    for(c=0;c<7;c++){
+      dt=new Date(start);dt.setDate(start.getDate()+w*7+c);k=dateKey(dt);entries=byDate[k]||[];
+      sh.getRange(r,2+c).setValue(dt.getDate()).setBackground(dt.getMonth()+1===d.month?CAL_DATE:"#EFEFEF");
+      sh.getRange(r+1,2+c).setValue(itemsText(entries,"airstrip")).setBackground(itemsText(entries,"airstrip")?CAL_LOC:WHI);
+      sh.getRange(r+2,2+c).setValue(itemsText(entries,"contents"));
+      sh.getRange(r+3,2+c).setValue(itemsText(entries,"requirements"));
+      sh.getRange(r+4,2+c).setValue(itemsText(entries,"assets"));
+      sh.getRange(r+5,2+c).setValue(itemsText(entries,"operationsConstraints"));
+      sh.getRange(r+6,2+c).setValue(itemsText(entries,"technicianConstraints"));
+      sh.getRange(r+7,2+c).setValue(itemsText(entries,"pilotConstraints"));
+      sh.getRange(r+8,2+c).setValue(itemsText(entries,"envelope")).setBackground(itemsText(entries,"envelope")?CAL_WRAP:WHI);
+    }
+  }
+  sh.getRange(1,1,60,8).setBorder(true,true,true,true,true,true,"#E5E5E5",SpreadsheetApp.BorderStyle.SOLID);
+
+  sh.getRange(3,10,1,2).merge().setValue("מנחתים").setBackground(CAL_TASK_HDR).setFontColor(WHI).setFontWeight("bold").setHorizontalAlignment("center");
+  sh.getRange(4,10,3,2).setValues([[d.airstrips[0]||"עין יהב",d.airstrips[1]||"מטווח 24"],[d.airstrips[2]||"קציעות",d.airstrips[3]||"מבוא חורון"],["",""]]).setHorizontalAlignment("center").setVerticalAlignment("middle").setWrapStrategy(wrap());
+  sh.getRange(3,13).setValue("מעטפת").setBackground(CAL_TASK_HDR).setFontColor(WHI).setFontWeight("bold").setHorizontalAlignment("center");
+  sh.getRange(4,13,3,1).setValues([[(d.envelopes[0]||"רת״א")],[(d.envelopes[1]||"חיל אוויר")],[""]]).setHorizontalAlignment("center").setVerticalAlignment("middle").setWrapStrategy(wrap());
+  sh.getRange(2,16,1,3).merge().setValue("משימות פתוחות").setBackground(CAL_TASK_HDR).setFontColor(WHI).setFontWeight("bold").setHorizontalAlignment("center");
+  sh.getRange(3,16,1,3).setValues([["משימה","שבוע","הערות"]]).setBackground(CAL_TASK_SUB).setFontWeight("bold").setHorizontalAlignment("center");
+  var taskRows=[];
+  for(i=0;i<31;i++){
+    var t=(d.tasks||[])[i]||{};
+    taskRows.push([t.task||t.name||"",t.week||"",t.notes||""]);
+  }
+  sh.getRange(4,16,31,3).setValues(taskRows).setHorizontalAlignment("right").setVerticalAlignment("middle").setWrapStrategy(wrap());
+  sh.getRange(2,16,33,3).setBorder(true,true,true,true,true,true,"#D8D8D8",SpreadsheetApp.BorderStyle.SOLID);
+  sh.getRange(3,10,4,2).setBorder(true,true,true,true,true,true,"#D8D8D8",SpreadsheetApp.BorderStyle.SOLID);
+  sh.getRange(3,13,4,1).setBorder(true,true,true,true,true,true,"#D8D8D8",SpreadsheetApp.BorderStyle.SOLID);
+  sh.setFrozenRows(3);
+  return sh;
+}
+
 function renderPlan(data){
   var folder=DriveApp.getFolderById(FOLDER_ID);
   var ss=SpreadsheetApp.create(data.title||"Weekly Plan");
   DriveApp.getFileById(ss.getId()).moveTo(folder);
   var def=ss.getSheets()[0];
+  if(data.monthCalendar) buildMonthCalendar(ss,data.monthCalendar);
   if(data.staffing) buildStaffing(ss,data.weekLabel,data.staffing);
   if(data.vehicles){
     buildVehicles(ss,data.weekLabel,data.days,data.vehicles,VEHICLE_SHEET_NAME,true);

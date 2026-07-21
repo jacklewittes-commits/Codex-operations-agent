@@ -1,0 +1,30 @@
+{
+  "title": "חודש אוגוסט - גאנט ניסויים",
+  "monthCalendar": {
+    "year": 2026,
+    "month": 8,
+    "tabName": "Aug Calendar",
+    "airstrips": ["עין יהב", "מטווח 24", "קציעות", "מבוא חורון"],
+    "envelopes": ["רת״א", "חיל אוויר"],
+    "tasks": [
+      {
+        "task": "לקדם מעטפת רת״א למנוע PBS",
+        "week": "אוגוסט",
+        "notes": "בדיקת מנוע לטיסה באוויר"
+      }
+    ],
+    "entries": [
+      {
+        "date": "2026-08-04",
+        "airstrip": "עין יהב",
+        "contents": ["ביותים - אופטי", "ניסוי מערכת דלק", "מיפוי אווירודינמי"],
+        "requirements": ["מנחת", "30kf", "מטווח 90"],
+        "assets": ["קוב 25", "קוב 103"],
+        "operationsConstraints": ["חזרה מוקדמת"],
+        "technicianConstraints": ["לא זמין אחרי 16:00"],
+        "pilotConstraints": ["צריך נהג נוסף"],
+        "envelope": "רת״א"
+      }
+    ]
+  }
+}
