@@ -555,9 +555,19 @@ function monthCalendarDefaults(d){
     entries:d.entries||[]
   };
 }
+function extractDriveFolderId(v){
+  if(!v) return "";
+  v=String(v);
+  var m=v.match(/\/folders\/([A-Za-z0-9_-]+)/);
+  if(m) return m[1];
+  m=v.match(/[?&]id=([A-Za-z0-9_-]+)/);
+  if(m) return m[1];
+  return v;
+}
 function buildMonthCalendar(ss,data){
   var d=monthCalendarDefaults(data),sh=getOrCreateSheet(ss,d.tabName),i,w,c,r,dt,k,entries,byDate=indexByDate(d.entries);
   resetSheet(sh,20);
+  sh.getRange(1,1,60,20).breakApart();
   sh.setRightToLeft(true);
   sh.setColumnWidth(1,145);
   for(c=2;c<=8;c++) sh.setColumnWidth(c,140);
@@ -576,10 +586,11 @@ function buildMonthCalendar(ss,data){
 
   var first=new Date(d.year,d.month-1,1),start=new Date(first);
   start.setDate(first.getDate()-first.getDay());
-  var labels=["","מנחת","תכולות","דרישות","גופים","אילוצי אופרציה","אילוצי טכנאים","אילוצי מטיסים","מעטפת"];
+  var labels=["","מנחת","תכולות","דרישות","גופים","אילוצי אופרציה","","","מעטפת"];
   for(w=0;w<6;w++){
     r=4+w*9;
     for(i=0;i<labels.length;i++) sh.getRange(r+i,1).setValue(labels[i]);
+    sh.getRange(r+5,1,3,1).merge().setValue("אילוצי אופרציה");
     sh.getRange(r,1,1,8).setBackground(CAL_DATE);
     sh.getRange(r+1,1,1,8).setBackground(WHI);
     sh.getRange(r+2,1,1,8).setBackground(WHI);
@@ -608,8 +619,8 @@ function buildMonthCalendar(ss,data){
       sh.getRange(r+3,2+c).setValue(itemsText(entries,"requirements"));
       sh.getRange(r+4,2+c).setValue(itemsText(entries,"assets"));
       sh.getRange(r+5,2+c).setValue(itemsText(entries,"operationsConstraints"));
-      sh.getRange(r+6,2+c).setValue(itemsText(entries,"technicianConstraints"));
-      sh.getRange(r+7,2+c).setValue(itemsText(entries,"pilotConstraints"));
+      sh.getRange(r+6,2+c).setValue(itemsText(entries,"operationsConstraints2")||itemsText(entries,"technicianConstraints"));
+      sh.getRange(r+7,2+c).setValue(itemsText(entries,"operationsConstraints3")||itemsText(entries,"pilotConstraints"));
       sh.getRange(r+8,2+c).setValue(itemsText(entries,"envelope")).setBackground(itemsText(entries,"envelope")?CAL_WRAP:WHI);
     }
   }
@@ -635,7 +646,9 @@ function buildMonthCalendar(ss,data){
 }
 
 function renderPlan(data){
-  var folder=DriveApp.getFolderById(FOLDER_ID);
+  data=data||{};
+  var folderId=extractDriveFolderId(data.folderId||data.folderUrl||FOLDER_ID);
+  var folder=DriveApp.getFolderById(folderId);
   var ss=SpreadsheetApp.create(data.title||"Weekly Plan");
   DriveApp.getFileById(ss.getId()).moveTo(folder);
   var def=ss.getSheets()[0];
