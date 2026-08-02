@@ -31,6 +31,7 @@ Never silently violate these. Stop or flag as blocking if unresolved.
 
 ## Vehicle And Lodging
 - Build outbound, return, and internal/special drives separately.
+- When reading a staffing/source sheet, treat green-highlighted names as people going down south that day and red/pink-highlighted names as people coming back up that day; use this to seed outbound and return drive planning.
 - Use PM-provided vehicles first; infer rentals only when the PM asks the agent to solve capacity.
 - Assign logistics staff to pickups before regular cars when pickups are active.
 - Assign integration/technical staff to the Ducato when active.
@@ -46,7 +47,4 @@ Never silently violate these. Stop or flag as blocking if unresolved.
 ## Revisions
 When the PM asks for changes, update the existing plan, revalidate downstream conflicts, and regenerate/update the Sheet only with PM approval.
 
-## Vendor Placeholder
-Food planning lives in `skills/food-management/`. Sending vendor messages requires explicit PM approval and available channel access.
-## Vendor Placeholder
 Food quantity planning lives in `skills/food-management/` when requested. Direct vendor contact workflows for food, rooms, and other services remain out of scope until explicitly added. For now, capture vendor contact needs as review flags, and do not send vendor messages without explicit PM approval and available channel access.

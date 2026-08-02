@@ -37,10 +37,12 @@ The primary product is a formatted Google Sheet in the designated Drive folder. 
 - If a repository data file is missing or malformed, report the exact file and continue only with explicit PM confirmation.
 - Keep `README.md`, `AGENTS.md`, and skill docs at 50 lines or fewer; split longer guidance into referenced docs.
 
-## Google Sheets renderer
+## Google Sheets format
 Use `output_contract.md` for PM-facing tab names and `references/publishing_policy.md` for file naming, approval, and Drive destination rules.
 
-Use Google Sheets as the only PM-facing artifact. `integrations/google_sheets/webhook_client.py` and Apps Script files are internal implementation details and should not be surfaced to the PM unless the PM explicitly asks for debugging help.
+For weekly operation plans, prefer copying the canonical weekly workbook named in `output_contract.md`, then clear/fill content while preserving formatting. Use the Apps Script renderer only when the PM requests the legacy generated format or the canonical copy workflow is unavailable.
+
+Use Google Sheets as the only PM-facing artifact. Local JSON, `integrations/google_sheets/webhook_client.py`, and Apps Script files are internal implementation details and should not be surfaced unless the PM asks for debugging help.
 
 ## Revision behavior
 When the PM asks for changes, do not restart intake. Identify the changed field or assignment, apply it, check for downstream conflicts, and regenerate/update the sheet. Report only the new link/status and any changed flags.

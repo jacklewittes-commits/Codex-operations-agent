@@ -4,13 +4,21 @@
 The required output is a formatted Google Sheet in the designated Google Drive folder. The PM-facing deliverable is the sheet URL, not JSON, local Apps Script files, or renderer/debug instructions.
 
 ## Standard Tabs
-Use these PM-facing tabs when corresponding data exists:
+Use the canonical weekly workbook format from:
+`https://docs.google.com/spreadsheets/d/1Qw-VSdhknkzg_vp0UsI9XDNGEqJaJhg0-GOH9Isa460/edit`
 
 - `איושים`
-- `שיבוצי רכבים` as the base vehicle-assignment tab, typically hidden after generation
-- `מעודכן שיבוצי רכבים` as the visible working vehicle tab
-- `שיבוצי לינה`
-- `הזמנות אוכל`
+- ` שיבוצי לינה`
+- ` שיבוצי רכבים`
+- `  הזמנות אוכל`
+
+Preserve the exact tab names, including leading spaces, unless the PM asks to rename tabs.
+
+## Format Rules
+- Create reusable weekly templates by copying the canonical workbook and clearing operational content, not by rebuilding the style from scratch.
+- In ` שיבוצי רכבים`, keep vehicle names, row labels, colors, merges, and borders; clear all editable assignment cells, including columns I-L, so the car table waits for content.
+- In `איושים`, keep role labels and colored movement semantics; clear copied names, counts, and week-specific dates.
+- In lodging and food tabs, keep lodging/menu/order scaffolding and formulas; clear occupants, dates, counts, and order inputs.
 
 ## Internal Payload
 The agent may internally produce a `weekly_plan` object that conforms to `schemas/weekly_plan.schema.json`. Do not ask the PM to produce it.

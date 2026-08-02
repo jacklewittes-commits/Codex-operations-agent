@@ -20,6 +20,8 @@ Use this when the PM provides a Google Drive link with partial planning context.
 - Read only tabs/ranges needed for the weekly plan.
 - Preserve Hebrew names, locations, vehicles, rooms, and raw cell values exactly.
 - Map source content loosely to `איושים`, `שיבוצי רכבים`, `שיבוצי לינה`, `הזמנות אוכל`, and notes.
+- For staffing/source sheets, use cell color as drive intent: green means the person is going down south that day; red/pink means the person is coming back up that day.
+- When using a prior weekly plan as a format reference, ignore its assignments unless the PM asks to reuse them.
 
 ## Conflict Handling
 - If chat and source file conflict, use the PM's latest explicit instruction.
