@@ -18,12 +18,13 @@ The Google Sheet is the primary deliverable. JSON exists only as internal plumbi
 
 Generated sheets are published only after PM approval.
 
-The approved Drive folder is:
+The approved Drive folders are:
 
-- Folder URL: https://drive.google.com/drive/folders/1bXGmaGlUHH25K6O4_WzUAmA8gWR9HjzV
-- Folder ID: `1bXGmaGlUHH25K6O4_WzUAmA8gWR9HjzV`
+- Tests/dry runs: https://drive.google.com/drive/folders/1uqKGYKgwvTk1ipW7slqT4NWTjNoF7jAf
+- Real weekly plans: https://drive.google.com/drive/folders/10wE1ivttA14x0GqbXQWSh00NRd8gJdM_
+- Monthly plans: https://drive.google.com/drive/folders/1AebF43GTu4UAJR_MJAdzcT4_Z0jlbCKQ
 
-The agent must not browse, inspect, list, or search Drive unless the PM explicitly grants permission for a specific task. The folder is treated only as the final publishing destination.
+The agent must not browse, inspect, list, or search Drive unless the PM explicitly grants permission for a specific task. These folders are treated only as final publishing destinations.
 
 Sheet naming convention:
 

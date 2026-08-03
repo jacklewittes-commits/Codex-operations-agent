@@ -3,11 +3,15 @@
 ## Approval gate
 Do not publish or upload a Google Sheet until the PM has approved the draft plan for publication. Drafting, validation, and revision can happen without Drive access.
 
-## Allowed Drive destination
-Publish approved weekly logistics sheets only to:
+## Allowed Drive destinations
+Use the destination that matches the PM request:
 
-- Folder URL: https://drive.google.com/drive/folders/1bXGmaGlUHH25K6O4_WzUAmA8gWR9HjzV?usp=drive_link
-- Folder ID: `1bXGmaGlUHH25K6O4_WzUAmA8gWR9HjzV`
+- Tests and dry runs:
+  - Folder URL: https://drive.google.com/drive/folders/1uqKGYKgwvTk1ipW7slqT4NWTjNoF7jAf
+  - Folder ID: `1uqKGYKgwvTk1ipW7slqT4NWTjNoF7jAf`
+- Real weekly plans:
+  - Folder URL: https://drive.google.com/drive/folders/10wE1ivttA14x0GqbXQWSh00NRd8gJdM_
+  - Folder ID: `10wE1ivttA14x0GqbXQWSh00NRd8gJdM_`
 
 The agent has no standing permission to access other Drive folders. Do not list, inspect, read, or use Drive files as context unless the PM explicitly grants access for a specific task.
 

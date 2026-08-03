@@ -14,7 +14,7 @@ The deliverable is a native Google Sheet saved in the PM's requested Drive folde
 
 ## Creation Flow
 1. Ask which month(s) and year to create. Infer the correct number of days and week blocks from the calendar.
-2. Ask for the destination Drive folder if it is not already provided. The default current folder is `https://drive.google.com/drive/folders/1AebF43GTu4UAJR_MJAdzcT4_Z0jlbCKQ`.
+2. Ask for the destination Drive folder if it is not already provided. The default monthly folder is `https://drive.google.com/drive/folders/1AebF43GTu4UAJR_MJAdzcT4_Z0jlbCKQ`.
 3. Before creating, ask one concise optional-prefill question: whether the PM has known tasks, flight areas, envelopes, team constraints, or fixed dates to include now.
 4. Create a clean blank planner unless the PM explicitly provides dated cells, open tasks, or highlights for the new month.
 5. Save the created Google Sheet in the requested Drive folder and return only the Sheet link plus any material assumptions.

@@ -57,13 +57,16 @@ The agent must not:
 - list files
 - search Drive
 
-The configured Drive folder is only a publishing destination.
+The configured Drive folders are only publishing destinations.
 
-Folder:
-https://drive.google.com/drive/folders/1bXGmaGlUHH25K6O4_WzUAmA8gWR9HjzV
+Tests/dry runs:
+https://drive.google.com/drive/folders/1uqKGYKgwvTk1ipW7slqT4NWTjNoF7jAf
 
-Folder ID:
-`1bXGmaGlUHH25K6O4_WzUAmA8gWR9HjzV`
+Real weekly plans:
+https://drive.google.com/drive/folders/10wE1ivttA14x0GqbXQWSh00NRd8gJdM_
+
+Monthly plans:
+https://drive.google.com/drive/folders/1AebF43GTu4UAJR_MJAdzcT4_Z0jlbCKQ
 
 Naming convention:
 `aa-bb.mm_plan`
