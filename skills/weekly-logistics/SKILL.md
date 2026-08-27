@@ -15,14 +15,14 @@ The primary product is a formatted Google Sheet in the designated Drive folder. 
 - Read `output_contract.md` before generating or reporting the sheet.
 - Read `review_checklist.md` before returning the PM-facing completion message.
 - Read `references/source_sheet_intake.md` when the PM provides a partial Google Drive file as input.
-- Read `../food-management/SKILL.md` when the PM asks for food planning, meal quantities, catering, Aroma, BBQ, BBB, WhatsApp/email food orders, or special food requirements.
+- Read `../food-management/SKILL.md` when weekly planning includes food, meal quantities, catering, Aroma, BBQ, BBB, WhatsApp/email food orders, or special food requirements.
 - Use `../../schemas/weekly_plan.schema.json` as the internal renderer payload shape.
 - Use `../../integrations/google_sheets/webhook_client.py` to call the deployed Google Sheets renderer when a webhook URL is configured.
 
 ## Core workflow
 1. Collect PM context from natural language, a partial source file, or both; always produce the same standard output Sheet.
 2. Ask only for blocking missing information. Convert non-blocking gaps into assumptions or review flags.
-3. If the PM did not specify food, ask whether the PM wants to choose food preferences for the week or wants the agent to plan meals automatically from attendance and overnight counts.
+3. Treat food as part of weekly planning. If the PM did not specify food, ask whether the PM wants to choose food preferences for the week or wants the agent to plan meals automatically from attendance and overnight counts.
 4. Build the internal `weekly_plan` payload.
 5. Validate hard constraints and PM operational planning checks: vehicle capacity, trailer license, rental driver permission, trucks, room capacity, gender-separated lodging, required roles, airstrip coordination, fuel sufficiency, equipment loading, rental/lodging handoffs, and PM checklist completeness.
 6. Prepare the plan quietly in the background and keep implementation details out of the PM conversation.

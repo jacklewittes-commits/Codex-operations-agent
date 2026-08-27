@@ -6,11 +6,12 @@ description: create or revise reusable monthly experiment operations calendars i
 # Monthly Operations Calendar
 
 ## Use When
-- The PM asks for a monthly or multi-month experiment calendar/planner.
-- The PM wants team members to add availability, constraints, early returns, drives, or personal blockers.
+The PM asks for a monthly or multi-month experiment calendar, or wants team members to add availability, constraints, early returns, drives, or personal blockers.
 
 ## Product Contract
 The deliverable is a native Google Sheet saved in the PM's requested Drive folder, then returned as a link. Do not ask the PM to write JSON. Collect month/year and destination folder naturally, ask once whether the PM wants to provide known tasks or calendar entries before creation, then render quietly through the Google Sheets Apps Script.
+
+Monthly calendars do not trigger weekly food planning. If the PM asks for food, treat that as a separate weekly logistics planning request.
 
 ## Creation Flow
 1. Ask which month(s) and year to create. Infer the correct number of days and week blocks from the calendar.
@@ -42,9 +43,7 @@ Minimum:
 }
 ```
 
-Optional entries can include `date`, `airstrip`, `contents`, `requirements`, `assets`, `operationsConstraints`, `operationsConstraints2`, `operationsConstraints3`, and `envelope`. Values may be strings or arrays; arrays become `- ` lists.
-
-Optional tasks use `{ "task": "...", "week": "...", "notes": "..." }`.
+Optional entries can include `date`, `airstrip`, `contents`, `requirements`, `assets`, `operationsConstraints`, `operationsConstraints2`, `operationsConstraints3`, and `envelope`. Optional tasks use `{ "task": "...", "week": "...", "notes": "..." }`.
 
 ## Review
 Before returning the link, verify the month tab exists, rows are wrapped, `תכולות/דרישות/גופים` row heights are expanded, and side task rows are preformatted for adding more tasks.

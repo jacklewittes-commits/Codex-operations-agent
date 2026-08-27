@@ -12,6 +12,9 @@ Use the destination that matches the PM request:
 - Real weekly plans:
   - Folder URL: https://drive.google.com/drive/folders/10wE1ivttA14x0GqbXQWSh00NRd8gJdM_
   - Folder ID: `10wE1ivttA14x0GqbXQWSh00NRd8gJdM_`
+- Monthly plans:
+  - Folder URL: https://drive.google.com/drive/folders/1AebF43GTu4UAJR_MJAdzcT4_Z0jlbCKQ
+  - Folder ID: `1AebF43GTu4UAJR_MJAdzcT4_Z0jlbCKQ`
 
 The agent has no standing permission to access other Drive folders. Do not list, inspect, read, or use Drive files as context unless the PM explicitly grants access for a specific task.
 

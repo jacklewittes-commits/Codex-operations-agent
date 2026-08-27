@@ -1,262 +1,42 @@
-# Experiment Logistics Agent - Migration and Architecture Summary
-
-## Overview
-
-This project started as a Claude-based operational logistics agent and was migrated into a Codex-compatible repository structure.
-
-The agent supports weekly experiment planning for the Flight Test Division. The PM interacts with the agent in natural language and does not write JSON or manually structure data.
-
-The agent is responsible for:
-
-- understanding the upcoming experiment
-- planning logistics
-- validating operational constraints
-- generating the standardized operational Google Sheet
-- publishing the approved sheet to the designated Google Drive folder
-
-The generated Google Sheet is the primary artifact of the system.
-
-## Core Operational Flow
-
-PM conversation -> agent intake/questions -> internal structured plan -> validation -> Google Sheets renderer -> Google Drive publishing -> PM review/revisions
-
-The PM may ask the agent to revise the plan, or manually edit the Google Sheet afterward.
-
-## Architectural Decisions
-
-### Google Apps Script Payload Schema Is The Source Of Truth
-
-The Apps Script renderer defines the canonical structure of the weekly plan.
-
-The local Excel generator currently diverges and should eventually be updated to match the schema or deprecated.
-
-The authoritative output path is:
-
-weekly plan schema -> Apps Script renderer -> native Google Sheet
-
-### JSON Is Internal Only
-
-The PM never interacts with JSON directly.
-
-The agent may internally generate structured objects, validation payloads, and intermediate schemas, but these are hidden from the PM.
-
-### Google Sheet Is The Operational Product
-
-The system is not just a planning chatbot. It is an operational logistics planning system whose output is a formatted Google Sheet used by the experiment team during execution.
-
-The renderer creates tabs, formats sheets, and produces staffing plans, lodging assignments, vehicle assignments, food order plans, and operational review sheets.
-
-## Drive Publishing Policy
-
-The agent publishes only after PM approval.
-
-The agent must not:
-
-- browse Drive
-- inspect other folders
-- list files
-- search Drive
-
-The configured Drive folders are only publishing destinations.
-
-Tests/dry runs:
-https://drive.google.com/drive/folders/1uqKGYKgwvTk1ipW7slqT4NWTjNoF7jAf
-
-Real weekly plans:
-https://drive.google.com/drive/folders/10wE1ivttA14x0GqbXQWSh00NRd8gJdM_
-
-Monthly plans:
-https://drive.google.com/drive/folders/1AebF43GTu4UAJR_MJAdzcT4_Z0jlbCKQ
-
-Naming convention:
-`aa-bb.mm_plan`
-
-Example:
-`01-03.06_plan`
-
-## Repository Structure
-
-```text
-experiment-logistics-agent/
-├── AGENTS.md
-├── skills/
-│   ├── weekly-logistics/
-│       ├── SKILL.md
-│       ├── pm_intake.md
-│       ├── planning_rules.md
-│       ├── output_contract.md
-│       ├── review_checklist.md
-│       └── references/
-│           ├── fleet_context.md
-│           ├── publishing_policy.md
-│           ├── context_relocation.md
-│           └── data_extraction_notes.md
-│   └── food-management/
-│       ├── SKILL.md
-│       └── references/
-│           └── ein_yahav_food_rules.md
-├── schemas/
-│   └── weekly_plan.schema.json
-├── planner/
-│   ├── validator.py
-│   ├── naming.py
-│   ├── intake_parser.py
-│   └── revision_engine.py
-├── integrations/
-│   └── google_sheets/
-│       ├── apps_script.js
-│       ├── webhook_client.py
-│       └── deploy.md
-├── data/
-│   ├── members.csv
-│   ├── vehicles.csv
-│   ├── hostels.csv
-│   ├── experiment_sites.csv
-│   ├── food_catering_ein_yahav.csv
-│   ├── food_specials.csv
-│   └── README.md
-├── examples/
-├── outputs/
-└── tests/
-```
-
-## Data And Context Separation
-
-One of the biggest architecture corrections was separating factual data from operational reasoning.
-
-Previous state:
-
-- CSV files incorrectly contained instructions, context, and logic.
-- Operational data was embedded in Apps Script.
-
-Current state:
-
-- CSV files contain only structured factual data.
-- Skills contain operational logic and context.
-- Apps Script only renders Sheets.
-
-Rule:
-
-- `skills/` = operational reasoning
-- `data/` = factual structured datasets
-- `integrations/` = rendering and publishing
-
-## Operational Datasets
-
-### members.csv
-
-Contains:
-
-- name
-- team
-- position
-- can load
-- trailer license
-- rental permissions
-
-Important updates:
-
-- everyone currently marked as capable of loading
-- ספי marked as Manager
-- Kira rental restriction represented structurally instead of notes
-
-### vehicles.csv
-
-Important fleet context:
-
-- טנדר = pickup truck
-- נגרר = trailer
-
-Current assumptions:
-
-- 2 company pickups
-- 2 company trailers
-- Hyundais are company vehicles
-- RAV4/Toyota is company vehicle
-- Toyota Yaris cars are company vehicles
-- Jumpy and some others may be rented weekly
-- rental vehicles are common operationally
-
-This logic is documented in `skills/weekly-logistics/references/fleet_context.md`.
-
-### hostels.csv
-
-Hostel inventory currently extracted from historical weekly plans.
-
-Current hostels are in עין יהב.
-
-Additional locations and hostels will likely be added later.
-
-### food_catering_ein_yahav.csv
-
-Known Ein Yahav catering items, prices, units, and menu notes extracted from April/May weekly plans.
-
-The ordering heuristics based on historical headcounts live in `skills/food-management/references/ein_yahav_food_rules.md`.
-
-### food_specials.csv
-
-Current non-standard food counts by special category. The food-management skill reads this before finalizing catering counts and the renderer includes it in the `הזמנות אוכל` tab.
-
-## Skill Behavior
-
-The weekly logistics skill currently teaches the agent to:
-
-- intake PM context conversationally
-- ask only blocking questions
-- infer missing structure
-- create weekly logistics plans
-- validate constraints
-- generate the operational Google Sheet
-- return review guidance
-- revise plans iteratively
-
-The food-management skill currently teaches the agent to:
-
-- derive meal headcounts from weekly staffing and drive changes
-- plan Ein Yahav catering lunch quantities
-- separate vegetarian Aroma salad orders from catering quantities
-- use `food_specials.csv` to confirm non-standard food counts
-- keep WhatsApp/email/phone/manual food ordering channels available in the plan
-- flag BBB and BBQ dinner choices that need PM confirmation
-
-## Current Status
-
-Current maturity: `v0.1.0`
-
-This represents:
-
-- successful migration into Codex architecture
-- working repository structure
-- initial operational datasets
-- Google Sheets renderer integration
-- planning workflow definition
-
-Not yet complete:
-
-- stable planning engine
-- fully aligned validator
-- production-grade schema enforcement
-- vendor integrations
-- automatic conflict resolution
-- automated routing optimization
-
-## Known Technical Gap
-
-There are currently two output systems:
-
-1. Google Apps Script renderer
-2. Local Excel generator
-
-They are not fully aligned. The Apps Script payload schema should become the single canonical schema moving forward.
-
-## Recommended Next Steps
-
-1. Consolidate around the Apps Script schema.
-2. Strengthen schema validation.
-3. Improve planner engine.
-4. Build realistic PM conversation examples.
-5. Test the full Google Sheet publishing flow.
-6. Add vendor/contact integrations later.
+# Codex Logistics Agent Architecture
+
+## Product
+The PM-facing product is a native Google Sheet. Codex may use JSON, schemas, scripts, and Apps Script internally, but the PM should receive links, assumptions, blockers, and review flags.
+
+## Main Flow
+PM conversation -> intake -> internal weekly plan -> validation -> Google Sheet copy/fill or renderer -> PM approval -> Drive publication -> revisions.
+
+## Canonical Output Path
+For weekly plans, prefer copying the canonical weekly workbook and clearing/filling the existing tabs while preserving formatting. Use the Apps Script renderer when the canonical copy/fill workflow is unavailable or a legacy generated sheet is requested.
+
+Monthly calendars use the Apps Script `monthCalendar` renderer.
+
+## Module Responsibilities
+- `skills/weekly-logistics/`: PM intake, planning rules, output contract, and review behavior.
+- `skills/food-management/`: weekly food sub-skill used by weekly logistics.
+- `skills/monthly-operations-calendar/`: monthly calendar Sheet creation.
+- `data/`: factual CSV master data only.
+- `planner/validator.py`: operational validation. Currently basic; should be expanded.
+- `planner/intake_parser.py`: future deterministic extraction from PM text into plan facts.
+- `planner/revision_engine.py`: future deterministic plan mutation and conflict checking.
+- `integrations/google_sheets/`: Apps Script renderer and webhook client.
+
+## Drive Policy
+Publish only after PM approval. The approved folders are:
+- Weekly: https://drive.google.com/drive/folders/10wE1ivttA14x0GqbXQWSh00NRd8gJdM_
+- Monthly: https://drive.google.com/drive/folders/1AebF43GTu4UAJR_MJAdzcT4_Z0jlbCKQ
+- Tests: https://drive.google.com/drive/folders/1uqKGYKgwvTk1ipW7slqT4NWTjNoF7jAf
+
+The agent must not list, search, browse, or inspect Drive unless the PM explicitly grants task-specific permission.
+
+## Data Boundaries
+CSV files contain facts, not workflow instructions. Skills contain operational logic. Apps Script renders Sheets and should not become the planning engine.
+
+## Current Gaps
+- Intake parsing is still conversational, not deterministic.
+- Revision behavior exists as skill instruction, not as a coded engine.
+- Validation must expand to vehicle, lodging, role, and food constraints.
+- Canonical workbook copy/fill needs implementation parity with the renderer.
 
 ## Long-Term Vision
 

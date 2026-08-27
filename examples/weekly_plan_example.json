@@ -33,6 +33,22 @@
           "retP1": "אליאור"
         }
       ]
+    },
+    {
+      "name": "משאית - 1",
+      "trailerRequired": false,
+      "days": [
+        {
+          "outRoute": "תל אביב -> עין יהב",
+          "outTime": "בוקר",
+          "outCmd": "יהב גודל"
+        },
+        {},
+        {
+          "retRoute": "עין יהב -> תל אביב",
+          "retCmd": "יהב גודל"
+        }
+      ]
     }
   ],
   "staffing": [
