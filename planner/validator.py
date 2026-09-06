@@ -129,7 +129,7 @@ def vehicle_capacity(vehicle: dict, master: dict[str, str] | None) -> int | None
         if cap:
             return cap
         if normalize(master.get("vehicle_type")) == "truck":
-            return 2
+            return 1
     return None
 
 
@@ -237,8 +237,8 @@ def validate_vehicles(
                 commander = people[0]
                 if capacity is not None and len(people) > capacity:
                     errors.append(f"{name} {label} day {idx + 1} has {len(people)} people, capacity {capacity}")
-                if is_truck and len(people) > 2:
-                    errors.append(f"{name} {label} day {idx + 1} is a truck with more than driver plus escort")
+                if is_truck and len(people) > 1:
+                    errors.append(f"{name} {label} day {idx + 1} has more than one team person")
                 if is_trailer:
                     row = members.get(commander)
                     if not row:

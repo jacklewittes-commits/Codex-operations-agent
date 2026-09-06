@@ -23,6 +23,7 @@
 
 ## שיבוצי רכבים
 - Keep the operational vehicle-block format: vehicle column, details column, daily `הלוך` and `חזור` columns.
+- Build drives from the manpower plan first: `ירידה` entries need a southbound seat, and `חזרה` entries need a northbound seat.
 - Separate vehicles by experiment per day. A car used for מבוא חורון cannot also serve עין יהב that same day.
 - Give עין יהב priority for fuel-capable DMAX/pickup vehicles because they refuel the planes.
 - מבוא חורון uses small generators and should use regular cars or rentals when possible.
@@ -30,15 +31,15 @@
 - Include `דוקאטו`, company pickups, Ford Rangers, rentals, and `משאית` blocks when relevant.
 
 ## Trucks
-- A `משאית` bringing a plane down must have a team escort.
-- Put the escort in the truck passenger row as `מלווה: <name>`.
-- Remove that escort from any regular car for the same trip to avoid double-booking.
-- Trucks carry only driver plus optional escort unless the PM explicitly confirms otherwise.
+- A `משאית` bringing a plane down needs one team person total with the truck.
+- Do not add a driver plus a second `מלווה` unless the PM explicitly asks for two team people.
+- Remove that person from any regular car for the same trip to avoid double-booking.
 
 ## שיבוצי לינה
 - Preserve lodging section headers, unit/room columns, gray sleeping grid, notes column, and totals row.
 - Assign only overnight attendees.
 - Respect room capacity and gender-correct sharing.
+- At `בקתה ערבה - נוני`, give each person a separate available room before putting two people in one room, because the second-room quality is lower.
 
 ## הזמנות אוכל
 - Preserve the מחירון table and daily order blocks.

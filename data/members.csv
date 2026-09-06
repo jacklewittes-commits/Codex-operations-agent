@@ -29,7 +29,7 @@ name,english_name,position,team,can_load,trailer_license,can_drive_rental,aliase
 אסף רוזן,,מהנדס מוביל,מהנדסים,כן,לא,כן,אסף,מהנדס מוביל,
 ארז בן אורי,,מהנדס בקרה,מהנדסים,כן,לא,כן,ארז,מהנדס בקרה,
 בן ארוטשס,,בטיחות,מהנדסים,כן,לא,כן,בן,בטיחות; נוספים,
-בן קשלס,,מהנדס בקרה,מהנדסים,כן,,,,מהנדס בקרה,inferred from weekly staffing sheets; verify
+בן קשלס,,מהנדס בקרה,מהנדסים,כן,,,בן קטלן,מהנדס בקרה,inferred from weekly staffing sheets; verify spelling against weekly Sheet
 טל ריינדלר,,,מהנדסים,כן,לא,כן,טל,,
 ירון שולמי,,,מהנדסים,כן,לא,כן,ירון,,
 יריב דה בוטון,,,מהנדסים,כן,לא,כן,יריב,,
@@ -80,7 +80,7 @@ name,english_name,position,team,can_load,trailer_license,can_drive_rental,aliase
 אורי אליהו,,טכנאי מטוסים,אינטגרציה,כן,,,אורי,טכנאי מטוסים,observed in 30.08-03.09 weekly plan; verify
 עמיחי ברוך,,טכנאי מטוסים,אינטגרציה,כן,,,עמיחי,טכנאי מטוסים,observed in 30.08-03.09 weekly plan; verify
 ישראל,,אינטגרציה,אינטגרציה,כן,,,,אינטגרציה,observed in 30.08-03.09 weekly plan; verify
-אלון,,אינטגרציה,אינטגרציה,כן,,,,אינטגרציה,observed in 30.08-03.09 weekly plan; verify
+אלון,,אינטגרציה,אינטגרציה,כן,,,אלון קרסין,אינטגרציה,observed in 30.08-03.09 weekly plan; verify
 סמי,,לוגיסטיקה,לוגיסטיקה,כן,,,,לוגיסטיקה,observed in 30.08-03.09 weekly plan; verify
 עומר שירי,,לוגיסטיקה,לוגיסטיקה,כן,,,,לוגיסטיקה,observed in 30.08-03.09 weekly plan; verify
 דור ליבנה,,לוגיסטיקה,לוגיסטיקה,כן,,,דור,לוגיסטיקה,observed in 30.08-03.09 weekly plan; verify
