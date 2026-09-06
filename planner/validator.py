@@ -29,6 +29,13 @@ def normalize(value: object) -> str:
     return re.sub(r"\s+", " ", str(value or "")).strip()
 
 
+def assignment_name(value: object) -> str:
+    text = normalize(value)
+    text = re.sub(r"^(מלווה|נהג)\s*:\s*", "", text)
+    text = re.split(r"\s+-\s*", text, maxsplit=1)[0]
+    return normalize(text).rstrip("? ")
+
+
 def compact(value: object) -> str:
     return re.sub(r"[\s\"'״׳-]+", "", str(value or ""))
 
@@ -50,7 +57,7 @@ def is_yes(value: object) -> bool:
 def people_index(rows: list[dict[str, str]]) -> dict[str, dict[str, str]]:
     out: dict[str, dict[str, str]] = {}
     for row in rows:
-        names = [row.get("name", "")]
+        names = [row.get("name", ""), row.get("english_name", "")]
         names.extend(str(row.get("aliases", "")).split("|"))
         for name in names:
             key = normalize(name)
@@ -82,7 +89,7 @@ def staffing_by_day(payload: dict) -> list[set[str]]:
         for prefill in experiment.get("prefill", []) or []:
             for idx, value in enumerate(prefill.get("days", []) or []):
                 if idx < len(present):
-                    name = normalize(value)
+                    name = assignment_name(value)
                     if name:
                         present[idx].add(name)
     return present
@@ -95,19 +102,20 @@ def role_names(payload: dict, role_pattern: str) -> set[str]:
             role = normalize(prefill.get("role", ""))
             if role_pattern in role:
                 for name in prefill.get("days", []) or []:
-                    if normalize(name):
-                        names.add(normalize(name))
+                    person = assignment_name(name)
+                    if person:
+                        names.add(person)
     return names
 
 
 def vehicle_leg_people(day: dict, prefix: str) -> list[str]:
     people = []
-    cmd = normalize(day.get(f"{prefix}Cmd", ""))
+    cmd = assignment_name(day.get(f"{prefix}Cmd", ""))
     if cmd:
         people.append(cmd)
     for key, value in day.items():
-        if re.fullmatch(prefix + r"P\d+", str(key)) and normalize(value):
-            people.append(normalize(value))
+        if re.fullmatch(prefix + r"P\d+", str(key)) and assignment_name(value):
+            people.append(assignment_name(value))
     return people
 
 

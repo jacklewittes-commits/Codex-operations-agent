@@ -26,7 +26,9 @@ Use this as internal planning context. It improves assumptions, flags, and check
 - After TRR, use experiment content and staffing to count attendees and צימר sleepers.
 - Default lodging key is two people per room/suite unless data or the PM says otherwise.
 - If people rotate through one room, notify the צימר owner and request linen replacement.
+- Recent עין יהב lodging used role clusters: logistics in `נקרות`, senior/PM pairings in `בקתה 8`, pilots/technical staff in `זוהר`/`שיזף`, and single-person swaps in `תמר`; treat these as defaults only after booked rooms are known.
 - Plan vehicles by origin hub: Tel Aviv and Yokneam.
+- Recent vehicle plans separate Tel Aviv and Yokneam departures, keep outbound/return legs separate by day, and use pickups/Ford Rangers for logistics, fuel, and mixed load-bearing groups before regular cars.
 - Rentals use the שלמה סיקסט online form and pickup at רחוב המסגר in Tel Aviv or חיפה.
 - Add rentals to כביש 6 and remove them on the return date.
 - Check mileage limits against the planned week and compare extra rental days to mileage penalties.

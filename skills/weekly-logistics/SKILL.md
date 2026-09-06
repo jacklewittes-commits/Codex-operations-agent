@@ -14,6 +14,7 @@ The primary product is a formatted Google Sheet in the designated Drive folder. 
 - Read `planning_rules.md` when building or revising the logistics plan.
 - Read `output_contract.md` before generating or reporting the sheet.
 - Read `review_checklist.md` before returning the PM-facing completion message.
+- Read `references/google_sheet_format.md` before creating or revising weekly Sheets.
 - Read `references/source_sheet_intake.md` when the PM provides a partial Google Drive file as input.
 - Read `../food-management/SKILL.md` when weekly planning includes food, meal quantities, catering, Aroma, BBQ, BBB, WhatsApp/email food orders, or special food requirements.
 - Use `../../schemas/weekly_plan.schema.json` as the internal renderer payload shape.

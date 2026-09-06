@@ -8,7 +8,7 @@ Plan meals as part of the weekly logistics plan. This is not an independent PM p
 ## Sources
 - Read `../../data/README.md`.
 - Use the current weekly plan when provided. Read `איושים` for people present by day, `הזמנות אוכל` for existing orders, and `שיבוצי רכבים` only when arrivals/departures affect meal headcount.
-- Use `../../data/food_specials.csv` to confirm current non-standard food counts before finalizing quantities.
+- Use `../../data/food_specials.csv` for non-standard counts and `../../data/food_limitations.csv` for person-specific restrictions.
 - Use `../../data/food_catering_ein_yahav.csv` for known Ein Yahav catering items and prices, but treat it as a baseline menu rather than the only allowed food source.
 - Read `references/ein_yahav_food_rules.md` before recommending quantities for Ein Yahav.
 ## Operating rules
@@ -21,13 +21,13 @@ Plan meals as part of the weekly logistics plan. This is not an independent PM p
 - Dinner has no fixed vendor rule; decide it week by week with the PM, or leave it to the agent when the PM delegates planning.
 - Keep ordering flexible. If the PM wants food outside the catering CSV, record it as ad hoc and include the order channel when known: WhatsApp, email, phone, or manual.
 - Do not send WhatsApp/email/vendor messages without explicit PM approval in that conversation.
-- Do not invent vendors, menu items, prices, allergies, or dietary restrictions.
+- Do not invent vendors, menu items, prices, allergies, restrictions, or preferences.
 - State assumptions and review flags clearly.
 - Keep `README.md`, `AGENTS.md`, and skill docs at 50 lines or fewer; split longer guidance into referenced docs.
 ## Quantity workflow
 1. Build meal headcount per day from people physically present for that meal. Adjust for late arrivals, early returns, and one-day visitors.
 2. Build dinner headcount from the people sleeping that night, unless the PM explicitly says dinner includes non-sleepers.
-3. Read `../../data/food_specials.csv` and subtract non-standard special orders from the standard lunch count when they are not covered by the regular lunch vendor.
+3. Read `../../data/food_specials.csv` and `../../data/food_limitations.csv`; subtract special orders from standard lunch when they replace the regular vendor.
 4. Add `Aroma salad` rows for people whose lunch is handled by Aroma instead of the standard lunch order.
 5. Size lunch quantities from that day's team size and lunch vendor.
 6. Size dinner quantities from the overnight sleeper count for that night.

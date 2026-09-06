@@ -1,5 +1,4 @@
 # Weekly Logistics Planning Rules
-
 Apply these rules when converting PM context into the weekly plan.
 
 ## References
@@ -7,9 +6,6 @@ Apply these rules when converting PM context into the weekly plan.
 - Read `references/pm_operational_domains.md` for airstrip, fuel, TRR, rentals, equipment, and trucking logic.
 - Read `references/pm_checklist_tab.md` when generating PM checklist rows.
 - Treat `data/members.csv`, `data/vehicles.csv`, `data/hostels.csv`, and `data/experiment_sites.csv` as master data.
-
-## Objective
-Produce a usable weekly logistics Google Sheet. The sheet is the primary product; written summaries are secondary.
 
 ## Core Entities
 - Experiment: site, dates, manager, safety officer, staffing, vehicles, lodging, and operational needs.
@@ -31,6 +27,9 @@ Never silently violate these. Stop or flag as blocking if unresolved.
 
 ## Vehicle And Lodging
 - Build outbound, return, and internal/special drives separately.
+- Separate cars by experiment per day; a car used for מבוא חורון cannot also serve עין יהב that day.
+- Prefer DMAX/pickups with fuel systems for עין יהב; מבוא חורון can use regular cars because generators are small and hand-carried.
+- Any משאית bringing a plane down must include a team escort as `מלווה`, and that escort cannot also ride in another car for that trip.
 - When reading a staffing/source sheet, treat green-highlighted names as people going down south that day and red/pink-highlighted names as people coming back up that day; use this to seed outbound and return drive planning.
 - Use PM-provided vehicles first; infer rentals only when the PM asks the agent to solve capacity.
 - Assign logistics staff to pickups before regular cars when pickups are active.
@@ -39,7 +38,7 @@ Never silently violate these. Stop or flag as blocking if unresolved.
 - Plan lodging only when the PM says the experiment is overnight or attendance spans overnight stays.
 - Use booked lodging first; flag overnight attendees without rooms, but not one-day experiments.
 
-## PM Checklist Behavior
+## PM Checklist
 - Generate `pmChecklist` rows from plan facts, assumptions, and unresolved flags.
 - Put pre-experiment and during-experiment tasks in the `PM Checklist` tab, not only in chat.
 - Mark blockers clearly when they affect safety, coordination, fuel, rooms, vehicles, or legal readiness.

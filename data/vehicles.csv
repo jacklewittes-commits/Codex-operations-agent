@@ -2,6 +2,8 @@ vehicle_id,display_name,vehicle_type,ownership,home_base,license_plate,active_by
 ducato,דוקאטו,van,company,תל אביב,49239604,כן,,לא,לא,דוקאטו; דוקאטו מספר רכב - 49239604,Permanent company van observed in weekly plans.
 pickup_1,טנדר #1 + מתדלקת סולר,pickup_truck,company,תל אביב,26425804,כן,,כן,context-dependent,טנדר #1 + מתדלקת סולר; טנדר #1 + מתדלקת סולר + נגרר ערבי; טנדר #1 + מתדלקת סולר מספר רכב - 26425804,טנדר means pickup truck. One of two company pickups. May be paired with trailer/נגרר depending on week.
 pickup_2,"טנדר #2 + מתדלקת דס""ל - גדול",pickup_truck,company,תל אביב,26425904,כן,,כן,context-dependent,"טנדר #2 + מתדקלת דס""ל - גדול; טנדר #2 + מתדלקת דס""ל מספר רכב - 26425904",Second company pickup. May be paired with trailer/נגרר depending on week.
+ford_ranger_1,פורד ריינג׳ר 1,pickup_truck,company,תל אביב,81895804,כן,,כן,context-dependent,פורד ריינג׳ר 1; פורד ריינג׳ר 1 מספר 81895804,New company Ford Ranger observed in 30.08-03.09 weekly plan.
+ford_ranger_2,פורד ריינג׳ר 2,pickup_truck,company,תל אביב,81894704,כן,,כן,context-dependent,פורד ריינג׳ר 2; פורד ריינג׳ר 2 מספר 81894704,New company Ford Ranger observed in 30.08-03.09 weekly plan.
 trailer_1,נגרר #1,trailer,company,תל אביב,,context-dependent,,,,טנדר #1 + מתדלקת סולר + נגרר ערבי,One of two trailers. נגרר means trailer. Requires trailer-licensed driver when attached.
 trailer_2,נגרר #2,trailer,company,תל אביב,,context-dependent,,,,,Second trailer. Requires trailer-licensed driver when attached.
 hyundai_i20_1,יונדאי I20 1,company_car,company,תל אביב,88386302,context-dependent,,לא,לא,יונדאי I20 1; יונדאי 1; יונדאי 1 יקנעם,Company car.

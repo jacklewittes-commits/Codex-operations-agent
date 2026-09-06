@@ -5,7 +5,7 @@ The required output is a formatted Google Sheet in the designated Google Drive f
 
 ## Standard Tabs
 Use the canonical weekly workbook format from:
-`https://docs.google.com/spreadsheets/d/1Qw-VSdhknkzg_vp0UsI9XDNGEqJaJhg0-GOH9Isa460/edit`
+`https://docs.google.com/spreadsheets/d/1JiJzcFgFbpJCXAVYFuWhodC6G1WDUtjH7Xm3vtFb4h0/edit`
 
 - `איושים`
 - ` שיבוצי לינה`
@@ -16,6 +16,7 @@ Preserve the exact tab names, including leading spaces, unless the PM asks to re
 
 ## Format Rules
 - Create reusable weekly templates by copying the canonical workbook and clearing operational content, not by rebuilding the style from scratch.
+- Follow `references/google_sheet_format.md` for layout, colors, tabs, vehicles, truck escorts, and food מחירון behavior.
 - In ` שיבוצי רכבים`, keep vehicle names, row labels, colors, merges, and borders; clear all editable assignment cells, including columns I-L, so the car table waits for content.
 - In `איושים`, keep role labels and colored movement semantics; clear copied names, counts, and week-specific dates.
 - In lodging and food tabs, keep lodging/menu/order scaffolding and formulas; clear occupants, dates, counts, and order inputs.
